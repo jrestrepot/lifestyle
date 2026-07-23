@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mi Horario Semanal v2</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap');
+  :root {
+    --verde: #4da78c;
+    --verde-claro: #e8f5f2;
+    --verde-oscuro: #2a7a63;
+    --gris: #f4f8fa;
+    --gris-medio: #d9e5ea;
+    --texto: #17313d;
+    --amarillo: #fff8e8;
+    --amarillo-borde: #efd38a;
+    --azul: #dff2ff;
+    --azul-t: #2e76a7;
+    --morado: #eef2ff;
+    --morado-t: #4651a8;
+    --naranja: #faefe2;
+    --naranja-t: #8a5b19;
+    --rojo: #fcecec;
+    --rojo-t: #a83b3b;
+    --rosa: #fbeaf0;
+    --rosa-t: #8b3d5f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', 'Segoe UI', sans-serif; background: linear-gradient(180deg, #eff9fb 0%, #e8f5ee 42%, #dff1ff 100%); color: var(--texto); min-height: 100vh; }
+
+  header { background: linear-gradient(135deg, #2a7a63 0%, #2e76a7 100%); color: white; padding: 20px 24px; text-align: center; box-shadow: 0 14px 34px rgba(22,48,57,0.14); }
+  header h1 { font-size: 1.4rem; font-weight: 700; }
+  header p { font-size: 0.85rem; opacity: 0.8; margin-top: 4px; }
+
+  .tabs { display: flex; background: white; border-bottom: 2px solid var(--gris-medio); position: sticky; top: 0; z-index: 100; }
+  .tab { flex: 1; padding: 14px 8px; text-align: center; font-size: 0.9rem; font-weight: 600; cursor: pointer; color: #888; border-bottom: 3px solid transparent; transition: all 0.2s; }
+  .tab.active { color: var(--verde-oscuro); border-bottom-color: var(--verde-oscuro); }
+
+  .tab-content { display: none; padding: 16px; max-width: 700px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  .week-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
+  .week-btn { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--gris-medio); background: white; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: #888; transition: all 0.2s; }
+  .week-btn.active { background: var(--verde-claro); color: var(--verde-oscuro); border-color: var(--verde); }
+
+  .progress-bar-container { background: white; border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.82rem; color: #666; margin-bottom: 6px; }
+  .progress-bar { background: var(--gris-medio); border-radius: 999px; height: 10px; overflow: hidden; }
+  .progress-fill { background: var(--verde); height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+
+  .alert-box { background: #fcebeb; border-left: 3px solid #e5a2a2; border-radius: 8px; padding: 10px 12px; font-size: 0.8rem; color: #a32d2d; margin-bottom: 16px; line-height: 1.5; }
+
+  .day-card { background: white; border-radius: 14px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .day-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; cursor: pointer; background: var(--verde-claro); user-select: none; }
+  .day-header h2 { font-size: 0.95rem; font-weight: 700; color: var(--verde-oscuro); }
+  .day-header .day-meta { font-size: 0.75rem; color: #666; }
+  .day-header .chevron { font-size: 0.9rem; color: var(--verde-oscuro); transition: transform 0.2s; }
+  .day-header.collapsed .chevron { transform: rotate(-90deg); }
+  .day-body { padding: 0 16px 14px; }
+  .day-body.hidden { display: none; }
+
+  .block-section { margin-top: 14px; }
+  .block-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 8px; }
+
+  .block-item { display: flex; align-items: flex-start; gap: 10px; padding: 9px 10px; border-radius: 8px; margin-bottom: 6px; transition: background 0.2s; cursor: pointer; }
+  .block-item:hover { filter: brightness(0.97); }
+  .block-item.checked { opacity: 0.55; text-decoration: line-through; }
+  .block-item input[type="checkbox"] { margin-top: 2px; accent-color: var(--verde-oscuro); width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
+  .block-item label { font-size: 0.88rem; line-height: 1.4; cursor: pointer; flex: 1; }
+  .block-item label span.hora { display: block; font-size: 0.75rem; margin-top: 2px; opacity: 0.65; text-decoration: none !important; }
+
+  .b-lla   { background: #e1f5ee; color: #0f6e56; }
+  .b-diil  { background: #e6f1fb; color: #185fa5; }
+  .b-fcd   { background: #eeedfe; color: #3c3489; }
+  .b-doc   { background: #faeeda; color: #854f0b; }
+  .b-gym   { background: #fcebeb; color: #a32d2d; }
+  .b-transp{ background: #fde3d3; color: #8a4a11; }
+  .b-hab   { background: #eaf3de; color: #3b6d11; }
+  .b-sleep { background: #e6f1fb; color: #0c447c; }
+  .b-wind  { background: #fbeaf0; color: #72243e; }
+  .b-free  { background: #f1efe8; color: #444441; }
+  .b-social{ background: #fbeaf0; color: #72243e; }
+
+  .tip-box { background: var(--amarillo); border-left: 3px solid var(--amarillo-borde); border-radius: 8px; padding: 10px 12px; font-size: 0.8rem; color: #7a6000; margin-top: 12px; }
+  .reset-day-btn { display: block; width: 100%; margin-top: 14px; padding: 8px; background: none; border: 1px solid var(--gris-medio); border-radius: 8px; font-size: 0.8rem; color: #999; cursor: pointer; transition: all 0.2s; }
+  .reset-day-btn:hover { border-color: #f44; color: #f44; }
+
+  .sleep-card { background: white; border-radius: 14px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; }
+  .sleep-card-header { padding: 14px 16px; background: #e6f1fb; }
+  .sleep-card-header h2 { font-size: 0.95rem; font-weight: 700; color: #0c447c; }
+  .sleep-card-body { padding: 14px 16px; }
+  .sleep-row { display: flex; align-items: flex-start; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--gris); font-size: 0.85rem; }
+  .sleep-row:last-child { border-bottom: none; }
+  .sleep-time { min-width: 90px; font-weight: 700; color: var(--verde-oscuro); flex-shrink: 0; }
+  .sleep-desc { color: var(--texto); line-height: 1.4; }
+
+  .summary-card { background: white; border-radius: 14px; padding: 16px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .summary-card h3 { font-size: 0.85rem; font-weight: 700; color: var(--verde-oscuro); margin-bottom: 12px; }
+  .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--gris); font-size: 0.85rem; gap: 10px;}
+  .stat-row:last-child { border-bottom: none; }
+  .stat-row .val { font-weight: 700; color: var(--verde-oscuro); text-align: right; }
+  .legend-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .leg { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #555; }
+  .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .note-box { background: var(--verde-claro); border-radius: 10px; padding: 12px 14px; font-size: 0.82rem; line-height: 1.6; color: var(--verde-oscuro); }
+  .note-box strong { display: block; margin-bottom: 4px; }
+
+  @media (max-width: 720px) {
+    header { padding: 16px 12px; }
+    header h1 { font-size: 1.15rem; line-height: 1.25; }
+    header p { font-size: 0.78rem; line-height: 1.4; }
+    .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tab { min-width: 92px; padding: 12px 6px; font-size: 0.78rem; }
+    .tab-content { padding: 12px; max-width: 100%; }
+    .week-toggle { flex-direction: column; gap: 8px; margin-bottom: 12px; }
+    .week-btn { width: 100%; padding: 11px; font-size: 0.82rem; }
+    .progress-bar-container, .day-card, .sleep-card, .summary-card { border-radius: 12px; }
+    .progress-bar-container { padding: 12px 14px; margin-bottom: 12px; }
+    .progress-label { font-size: 0.76rem; }
+    .day-header, .sleep-card-header { padding: 12px 14px; }
+    .day-header { align-items: flex-start; gap: 8px; }
+    .day-header h2, .sleep-card-header h2 { font-size: 0.9rem; line-height: 1.25; }
+    .day-body, .sleep-card-body { padding-left: 14px; padding-right: 14px; padding-bottom: 12px; }
+    .block-section { margin-top: 12px; }
+    .block-title { margin-bottom: 6px; }
+    .block-item { padding: 8px 9px; gap: 8px; }
+    .block-item label { font-size: 0.84rem; }
+    .block-item label span.hora { font-size: 0.72rem; }
+    .tip-box, .alert-box { font-size: 0.76rem; line-height: 1.45; }
+    .reset-day-btn { padding: 10px; font-size: 0.78rem; }
+    .sleep-row, .stat-row { gap: 8px; }
+    .sleep-row { flex-direction: column; }
+    .sleep-time { min-width: 0; font-size: 0.78rem; }
+    .sleep-desc, .stat-row { font-size: 0.8rem; line-height: 1.45; }
+    .summary-card { padding: 14px; margin-bottom: 12px; }
+    .summary-card h3 { font-size: 0.8rem; margin-bottom: 10px; }
+    .stat-row { align-items: flex-start; }
+    .stat-row .val { font-size: 0.8rem; }
+    .legend-grid, .info-grid { grid-template-columns: 1fr; display: grid; gap: 6px; }
+    .note-box { padding: 12px; }
+  }
+
+  @media (max-width: 430px) {
+    .tab { min-width: 84px; font-size: 0.74rem; }
+    .day-header h2, .sleep-card-header h2 { font-size: 0.86rem; }
+    .block-item input[type="checkbox"], .market-item input[type="checkbox"] { width: 15px; height: 15px; }
+    .progress-label, .day-header .day-meta { font-size: 0.72rem; }
+    .note-box, .tip-box, .alert-box { font-size: 0.74rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📅 Mi Horario Semanal (v2)</h1>
+  <p>Ajustado: sin caminar sola de noche + rutina para madrugar sin sufrir</p>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('horario')">📅 Horario</div>
+  <div class="tab" onclick="switchTab('sueno')">😴 Sueño</div>
+  <div class="tab" onclick="switchTab('resumen')">📊 Resumen</div>
+</div>
+
+<!-- HORARIO -->
+<div id="tab-horario" class="tab-content active">
+  <div class="week-toggle">
+    <button class="week-btn active" onclick="setWeek('a', this)">Semana A — con planning</button>
+    <button class="week-btn" onclick="setWeek('b', this)">Semana B</button>
+  </div>
+  <div class="alert-box">
+    🚗 <strong>Regla fija:</strong> después de las 6pm nunca camines sola al gym ni de vuelta — andá y volvé en carro. Los bloques de "volver en carro" ya están marcados en Lunes, Miércoles y Viernes.
+  </div>
+  <div class="progress-bar-container">
+    <div class="progress-label">
+      <span>Progreso del día</span>
+      <span id="prog-text">0 / 0 bloques</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+  <div id="days-container"></div>
+</div>
+
+<!-- SUEÑO -->
+<div id="tab-sueno" class="tab-content">
+  <div class="sleep-card">
+    <div class="sleep-card-header"><h2>🌙 Rutina nocturna estándar</h2></div>
+    <div class="sleep-card-body">
+      <div class="sleep-row"><span class="sleep-time">21:30</span><span class="sleep-desc">Última pantalla. Modo avión o escala de grises en el celular.</span></div>
+      <div class="sleep-row"><span class="sleep-time">21:30–22:00</span><span class="sleep-desc">Lectura física o audiolibro en cama con luz tenue. Nada de series.</span></div>
+      <div class="sleep-row"><span class="sleep-time">22:00</span><span class="sleep-desc">Luces apagadas. Temperatura fresca en el cuarto si podés.</span></div>
+      <div class="sleep-row"><span class="sleep-time">22:30</span><span class="sleep-desc">Dormida. Meta: 8 horas de sueño → despertar natural ~6:30.</span></div>
+    </div>
+  </div>
+  <div class="sleep-card">
+    <div class="sleep-card-header"><h2>🌜 Rutina especial de domingo y lunes en la noche</h2></div>
+    <div class="sleep-card-body">
+      <div class="sleep-row"><span class="sleep-time">Por qué</span><span class="sleep-desc">El martes tenés reunión de FCD a las 8am — es tu único madrugón fijo de la semana. Adelantá la rutina la noche anterior (domingo y sobre todo lunes) para no sufrirlo.</span></div>
+      <div class="sleep-row"><span class="sleep-time">21:00</span><span class="sleep-desc">Última pantalla — media hora antes que el resto de la semana.</span></div>
+      <div class="sleep-row"><span class="sleep-time">21:00–21:40</span><span class="sleep-desc">Lectura o audiolibro en cama, luz tenue.</span></div>
+      <div class="sleep-row"><span class="sleep-time">21:45</span><span class="sleep-desc">Luces apagadas, a dormir. Con despertar a las 7:00 te da ~9h15 de sueño — margen de sobra aunque cueste conciliar el sueño más temprano.</span></div>
+    </div>
+  </div>
+  <div class="sleep-card">
+    <div class="sleep-card-header"><h2>☀️ Rutina matutina</h2></div>
+    <div class="sleep-card-body">
+      <div class="sleep-row"><span class="sleep-time">7:00</span><span class="sleep-desc">Alarma el martes (único día con hora fija por la reunión de FCD). Sin snooze — teléfono lejos de la cama.</span></div>
+      <div class="sleep-row"><span class="sleep-time">8:30</span><span class="sleep-desc">Alarma el resto de los días. No tenés que madrugar salvo el martes — pero siempre lista para las 9:30.</span></div>
+      <div class="sleep-row"><span class="sleep-time">Al despertar</span><span class="sleep-desc">Abrí las persianas inmediatamente. La luz natural resetea el ritmo circadiano.</span></div>
+      <div class="sleep-row"><span class="sleep-time">Al despertar</span><span class="sleep-desc">Vaso de agua antes del café. El café después de 30–60 min evita el crash de cortisol.</span></div>
+      <div class="sleep-row"><span class="sleep-time">Al despertar</span><span class="sleep-desc">No revisés el celular antes de levantarte de la cama.</span></div>
+    </div>
+  </div>
+  <div class="sleep-card">
+    <div class="sleep-card-header"><h2>💡 Por qué te cuesta levantarte</h2></div>
+    <div class="sleep-card-body">
+      <div class="sleep-row"><span class="sleep-time">Consistencia</span><span class="sleep-desc">Acostarse siempre a la misma hora, incluso fines de semana. El cuerpo aprende el patrón.</span></div>
+      <div class="sleep-row"><span class="sleep-time">Un solo madrugón</span><span class="sleep-desc">Concentrar la hora fija de despertar en un solo día (martes) reduce el desgaste acumulado del resto de la semana.</span></div>
+      <div class="sleep-row"><span class="sleep-time">Temperatura</span><span class="sleep-desc">Cuarto fresco + luz natural son los dos estímulos más potentes para salir del sueño profundo.</span></div>
+      <div class="sleep-row"><span class="sleep-time">Evitar</span><span class="sleep-desc">Snooze: fragmenta el sueño y te deja peor. Una sola alarma a una hora realista.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESUMEN -->
+<div id="tab-resumen" class="tab-content">
+  <div class="summary-card">
+    <h3>🏢 Trabajos y reuniones fijas</h3>
+    <div class="stat-row"><span>LLA daily</span><span class="val">Lun–Vie 9:30</span></div>
+    <div class="stat-row"><span>LLA planning (sem. A)</span><span class="val">Lunes 9:30</span></div>
+    <div class="stat-row"><span>LLA proyecto pptx</span><span class="val">Miércoles 10:30</span></div>
+    <div class="stat-row"><span>FCD reunión</span><span class="val">Martes 8:00 (único madrugón)</span></div>
+    <div class="stat-row"><span>Diil reunión</span><span class="val">Miércoles 17:00</span></div>
+    <div class="stat-row"><span>LLA horario</span><span class="val">9:30–17:00</span></div>
+    <div class="stat-row"><span>FCD proyecto 6 semanas</span><span class="val">11 días totales, ~2/semana, flexible</span></div>
+  </div>
+  <div class="summary-card">
+    <h3>🚗 Seguridad: gym de noche</h3>
+    <div class="stat-row"><span>Regla</span><span class="val">Nunca caminar sola después de 6pm</span></div>
+    <div class="stat-row"><span>Ida al gym (antes de 6pm)</span><span class="val">Caminando está bien</span></div>
+    <div class="stat-row"><span>Vuelta del gym (después de 6pm)</span><span class="val">Siempre en carro</span></div>
+    <div class="stat-row"><span>Gym en carro</span><span class="val">10 min</span></div>
+    <div class="stat-row"><span>Gym caminando</span><span class="val">30 min</span></div>
+  </div>
+  <div class="summary-card">
+    <h3>🏋️ Hábitos semanales</h3>
+    <div class="stat-row"><span>Gym</span><span class="val">Lun, Mié, Vie (mínimo — sábado si querés sumar)</span></div>
+    <div class="stat-row"><span>Pasos diarios</span><span class="val">6.000 pasos</span></div>
+    <div class="stat-row"><span>Audiolibro</span><span class="val">Durante caminatas de ida al gym / pasos</span></div>
+    <div class="stat-row"><span>Wind down</span><span class="val">21:30 (21:00 domingo y lunes)</span></div>
+    <div class="stat-row"><span>Dormir</span><span class="val">22:30 (21:45 domingo y lunes, por el martes)</span></div>
+  </div>
+  <div class="summary-card">
+    <h3>🎨 Referencias de color</h3>
+    <div class="legend-grid">
+      <div class="leg"><div class="leg-dot" style="background:#1D9E75"></div>LLA</div>
+      <div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Diil</div>
+      <div class="leg"><div class="leg-dot" style="background:#7F77DD"></div>FCD</div>
+      <div class="leg"><div class="leg-dot" style="background:#BA7517"></div>DocDoc</div>
+      <div class="leg"><div class="leg-dot" style="background:#E24B4A"></div>Gym</div>
+      <div class="leg"><div class="leg-dot" style="background:#C6621A"></div>Transporte seguro</div>
+      <div class="leg"><div class="leg-dot" style="background:#639922"></div>Hábitos</div>
+      <div class="leg"><div class="leg-dot" style="background:#378ADD"></div>Sueño</div>
+      <div class="leg"><div class="leg-dot" style="background:#D4537E"></div>Social</div>
+      <div class="leg"><div class="leg-dot" style="background:#888780"></div>Tiempo libre</div>
+    </div>
+  </div>
+  <div class="note-box">
+    <strong>💡 Qué cambió respecto al horario anterior</strong>
+    1) El gym sigue lun/mié/vie de 5:15–6:30pm, pero ahora la vuelta a casa es siempre en carro, nunca caminando — la ida sí podés hacerla caminando porque todavía es de día. 2) El martes es tu único día con hora fija de despertar (7:00, por la reunión de FCD a las 8am); el resto de la semana no tenés que madrugar, solo estar lista para las 9:30. 3) Domingo y lunes en la noche adelantamos wind down y hora de dormir ~45 min para que ese madrugón del martes no te dé duro.
+  </div>
+</div>
+
+<script>
+const weeksData = {
+  a: [
+    {
+      name: 'Lunes', type: '🏋️ Gym · Semana A',
+      tip: 'Día de planning: la reunión de 9:30 reemplaza al daily. Gym después de las 5pm — volvé siempre en carro, y hoy en la noche adelantá el wind down porque mañana madrugás para FCD.',
+      blocks: [
+        { id: 'a-lun-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'a-lun-2', cat: 'Mañana', label: 'Desayuno (plan nutri)', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'a-lun-3', cat: 'Trabajo', label: 'Planning sprint LLA', hora: '9:30–10:30', cls: 'b-lla' },
+        { id: 'a-lun-4', cat: 'Trabajo', label: 'LLA work', hora: '10:30–13:00', cls: 'b-lla' },
+        { id: 'a-lun-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
+        { id: 'a-lun-6', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
+        { id: 'a-lun-7', cat: 'Tarde', label: 'Ida al gym caminando (todavía de día, 30 min)', hora: '17:00–17:30', cls: 'b-hab' },
+        { id: 'a-lun-8', cat: 'Tarde', label: 'Gym (1h)', hora: '17:30–18:30', cls: 'b-gym' },
+        { id: 'a-lun-9', cat: 'Tarde', label: '🚗 Volver a casa en carro (no caminar, ya es de noche)', hora: '18:30–18:40', cls: 'b-transp' },
+        { id: 'a-lun-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:00–19:45', cls: 'b-hab' },
+        { id: 'a-lun-11', cat: 'Noche', label: 'DocDoc calls', hora: '19:45–20:30', cls: 'b-doc' },
+        { id: 'a-lun-12', cat: 'Noche', label: 'Wind down adelantado (mañana madrugás)', hora: '21:00–21:45', cls: 'b-wind' },
+        { id: 'a-lun-13', cat: 'Noche', label: 'Sueño', hora: '21:45', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Martes', type: '💼 FCD + Diil · madrugón',
+      tip: 'Único día con alarma fija: 7:00am para la reunión de FCD a las 8. El resto de la semana no tenés que madrugar.',
+      blocks: [
+        { id: 'a-mar-0', cat: 'Madrugada', label: 'Despertar + alistarse (alarma fija)', hora: '7:00–7:45', cls: 'b-hab' },
+        { id: 'a-mar-1', cat: 'Mañana temprana', label: 'FCD reunión semanal', hora: '8:00–8:30', cls: 'b-fcd' },
+        { id: 'a-mar-3', cat: 'Mañana', label: 'Desayuno', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'a-mar-4', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
+        { id: 'a-mar-5', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
+        { id: 'a-mar-6', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
+        { id: 'a-mar-7', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
+        { id: 'a-mar-8', cat: 'Tarde', label: 'Diil horas', hora: '17:00–18:30', cls: 'b-diil' },
+        { id: 'a-mar-9', cat: 'Tarde', label: 'Pasos + audiolibro (de día, en casa/zona conocida)', hora: '18:30–19:15', cls: 'b-hab' },
+        { id: 'a-mar-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:30–20:30', cls: 'b-hab' },
+        { id: 'a-mar-11', cat: 'Noche', label: 'Lectura', hora: '21:00–21:30', cls: 'b-free' },
+        { id: 'a-mar-12', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'a-mar-13', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Miércoles', type: '🏋️ Gym · Diil · pptx',
+      tip: 'Día cargado: reunión LLA 10:30, Diil 17:00, gym después. Volvé del gym en carro — ya es de noche.',
+      blocks: [
+        { id: 'a-mie-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'a-mie-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'a-mie-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
+        { id: 'a-mie-4', cat: 'Trabajo', label: 'LLA work (prep pptx)', hora: '9:45–10:30', cls: 'b-lla' },
+        { id: 'a-mie-5', cat: 'Trabajo', label: 'Reunión proyecto LLA', hora: '10:30–11:30', cls: 'b-lla' },
+        { id: 'a-mie-6', cat: 'Trabajo', label: 'LLA work', hora: '11:30–13:00', cls: 'b-lla' },
+        { id: 'a-mie-7', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
+        { id: 'a-mie-8', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
+        { id: 'a-mie-9', cat: 'Tarde', label: 'Diil reunión', hora: '17:00–18:00', cls: 'b-diil' },
+        { id: 'a-mie-10', cat: 'Tarde', label: 'Ida al gym en carro (ya oscurece)', hora: '18:00–18:10', cls: 'b-transp' },
+        { id: 'a-mie-11', cat: 'Tarde', label: 'Gym (1h)', hora: '18:10–19:10', cls: 'b-gym' },
+        { id: 'a-mie-12', cat: 'Noche', label: '🚗 Volver a casa en carro', hora: '19:10–19:20', cls: 'b-transp' },
+        { id: 'a-mie-13', cat: 'Noche', label: 'Cena + ducha', hora: '19:45–20:45', cls: 'b-hab' },
+        { id: 'a-mie-14', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'a-mie-15', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Jueves', type: '💼 FCD work · DocDoc',
+      tip: 'Día tranquilo de LLA. Aprovechá la tarde para FCD project y DocDoc en la noche. Sin gym, sin madrugón.',
+      blocks: [
+        { id: 'a-jue-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'a-jue-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'a-jue-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
+        { id: 'a-jue-4', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
+        { id: 'a-jue-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
+        { id: 'a-jue-6', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
+        { id: 'a-jue-7', cat: 'Tarde', label: 'FCD work (project)', hora: '17:00–18:30', cls: 'b-fcd' },
+        { id: 'a-jue-8', cat: 'Tarde', label: 'Pasos + audiolibro (de día)', hora: '18:30–19:15', cls: 'b-hab' },
+        { id: 'a-jue-9', cat: 'Noche', label: 'Cena + ducha', hora: '19:30–20:30', cls: 'b-hab' },
+        { id: 'a-jue-10', cat: 'Noche', label: 'DocDoc calls', hora: '20:30–21:30', cls: 'b-doc' },
+        { id: 'a-jue-11', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'a-jue-12', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Viernes', type: '🏋️ Gym · cierre de semana',
+      tip: 'Último día de LLA. Gym después de las 5 — volvé en carro. Noche libre para recargar.',
+      blocks: [
+        { id: 'a-vie-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'a-vie-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'a-vie-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
+        { id: 'a-vie-4', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
+        { id: 'a-vie-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
+        { id: 'a-vie-6', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
+        { id: 'a-vie-7', cat: 'Tarde', label: 'Ida al gym caminando (todavía de día, 30 min)', hora: '17:00–17:30', cls: 'b-hab' },
+        { id: 'a-vie-8', cat: 'Tarde', label: 'Gym (1h)', hora: '17:30–18:30', cls: 'b-gym' },
+        { id: 'a-vie-9', cat: 'Tarde', label: '🚗 Volver a casa en carro (ya es de noche)', hora: '18:30–18:40', cls: 'b-transp' },
+        { id: 'a-vie-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:00–20:00', cls: 'b-hab' },
+        { id: 'a-vie-11', cat: 'Noche', label: 'Tiempo libre / lectura', hora: '20:00–21:30', cls: 'b-free' },
+        { id: 'a-vie-12', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'a-vie-13', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Sábado', type: '💑 Novio · descanso',
+      tip: 'Semana A: finde con el novio. Si sumás un 4to gym, hacelo antes de las 5pm para poder ir y volver caminando con luz de día; si es más tarde, en carro.',
+      blocks: [
+        { id: 'a-sab-1', cat: 'Mañana', label: 'Despertar tranquilo', hora: '8:30–9:00', cls: 'b-hab' },
+        { id: 'a-sab-2', cat: 'Mañana', label: 'Desayuno', hora: '9:00–9:30', cls: 'b-hab' },
+        { id: 'a-sab-3', cat: 'Mañana', label: 'Caminata al gym (pasos + audiolibro, 30 min)', hora: '9:30–10:00', cls: 'b-hab' },
+        { id: 'a-sab-3b', cat: 'Mañana', label: 'Gym opcional (4to día, 1h, antes de las 5pm)', hora: '10:00–11:00', cls: 'b-gym' },
+        { id: 'a-sab-4', cat: 'Día', label: 'Novio / plan libre', hora: '11:30–', cls: 'b-social' },
+        { id: 'a-sab-5', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'a-sab-6', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Domingo', type: '🌿 Comida libre · recarga',
+      tip: '¡Un tiempo libre a la semana mejora la adherencia! En la noche adelantá el wind down — mañana lunes normal, pero el martes madrugás.',
+      blocks: [
+        { id: 'a-dom-1', cat: 'Mañana', label: 'Despertar tranquilo', hora: '8:30–9:00', cls: 'b-hab' },
+        { id: 'a-dom-2', cat: 'Mañana', label: 'Desayuno', hora: '9:00–9:30', cls: 'b-hab' },
+        { id: 'a-dom-3', cat: 'Día', label: 'Novio / plan libre', hora: '10:00–', cls: 'b-social' },
+        { id: 'a-dom-4', cat: 'Mediodía', label: 'Comida libre (plan nutri)', hora: 'almuerzo', cls: 'b-hab' },
+        { id: 'a-dom-5', cat: 'Noche', label: 'Wind down adelantado', hora: '21:00–21:45', cls: 'b-wind' },
+        { id: 'a-dom-6', cat: 'Noche', label: 'Sueño', hora: '21:45', cls: 'b-sleep' },
+      ]
+    },
+  ],
+  b: [
+    {
+      name: 'Lunes', type: '🏋️ Gym · Semana B',
+      tip: 'Sin planning esta semana. Daily normal a las 9:30. Gym después de las 5 — volvé en carro, y adelantá el wind down por el martes.',
+      blocks: [
+        { id: 'b-lun-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'b-lun-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'b-lun-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
+        { id: 'b-lun-4', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
+        { id: 'b-lun-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
+        { id: 'b-lun-6', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
+        { id: 'b-lun-7', cat: 'Tarde', label: 'Ida al gym caminando (todavía de día, 30 min)', hora: '17:00–17:30', cls: 'b-hab' },
+        { id: 'b-lun-8', cat: 'Tarde', label: 'Gym (1h)', hora: '17:30–18:30', cls: 'b-gym' },
+        { id: 'b-lun-9', cat: 'Tarde', label: '🚗 Volver a casa en carro (no caminar, ya es de noche)', hora: '18:30–18:40', cls: 'b-transp' },
+        { id: 'b-lun-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:00–19:45', cls: 'b-hab' },
+        { id: 'b-lun-11', cat: 'Noche', label: 'DocDoc calls', hora: '19:45–20:30', cls: 'b-doc' },
+        { id: 'b-lun-12', cat: 'Noche', label: 'Wind down adelantado (mañana madrugás)', hora: '21:00–21:45', cls: 'b-wind' },
+        { id: 'b-lun-13', cat: 'Noche', label: 'Sueño', hora: '21:45', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Martes', type: '💼 FCD + Diil · madrugón',
+      tip: 'Único día con alarma fija: 7:00am para la reunión de FCD a las 8. El resto de la semana no tenés que madrugar.',
+      blocks: [
+        { id: 'b-mar-0', cat: 'Madrugada', label: 'Despertar + alistarse (alarma fija)', hora: '7:00–7:45', cls: 'b-hab' },
+        { id: 'b-mar-1', cat: 'Mañana temprana', label: 'FCD reunión semanal', hora: '8:00–8:30', cls: 'b-fcd' },
+        { id: 'b-mar-3', cat: 'Mañana', label: 'Desayuno', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'b-mar-4', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
+        { id: 'b-mar-5', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
+        { id: 'b-mar-6', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
+        { id: 'b-mar-7', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
+        { id: 'b-mar-8', cat: 'Tarde', label: 'Diil horas', hora: '17:00–18:30', cls: 'b-diil' },
+        { id: 'b-mar-9', cat: 'Tarde', label: 'Pasos + audiolibro (de día)', hora: '18:30–19:15', cls: 'b-hab' },
+        { id: 'b-mar-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:30–20:30', cls: 'b-hab' },
+        { id: 'b-mar-11', cat: 'Noche', label: 'Lectura', hora: '21:00–21:30', cls: 'b-free' },
+        { id: 'b-mar-12', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'b-mar-13', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Miércoles', type: '🏋️ Gym · Diil · pptx',
+      tip: 'El miércoles siempre es el día más cargado. Volvé del gym en carro — ya es de noche.',
+      blocks: [
+        { id: 'b-mie-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'b-mie-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'b-mie-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
+        { id: 'b-mie-4', cat: 'Trabajo', label: 'LLA work (prep pptx)', hora: '9:45–10:30', cls: 'b-lla' },
+        { id: 'b-mie-5', cat: 'Trabajo', label: 'Reunión proyecto LLA', hora: '10:30–11:30', cls: 'b-lla' },
+        { id: 'b-mie-6', cat: 'Trabajo', label: 'LLA work', hora: '11:30–13:00', cls: 'b-lla' },
+        { id: 'b-mie-7', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
+        { id: 'b-mie-8', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
+        { id: 'b-mie-9', cat: 'Tarde', label: 'Diil reunión', hora: '17:00–18:00', cls: 'b-diil' },
+        { id: 'b-mie-10', cat: 'Tarde', label: 'Ida al gym en carro (ya oscurece)', hora: '18:00–18:10', cls: 'b-transp' },
+        { id: 'b-mie-11', cat: 'Tarde', label: 'Gym (1h)', hora: '18:10–19:10', cls: 'b-gym' },
+        { id: 'b-mie-12', cat: 'Noche', label: '🚗 Volver a casa en carro', hora: '19:10–19:20', cls: 'b-transp' },
+        { id: 'b-mie-13', cat: 'Noche', label: 'Cena + ducha', hora: '19:45–20:45', cls: 'b-hab' },
+        { id: 'b-mie-14', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'b-mie-15', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Jueves', type: '💼 FCD work · DocDoc',
+      tip: 'FCD project y DocDoc calls. Pasos en la tarde como desconexión. Sin gym, sin madrugón.',
+      blocks: [
+        { id: 'b-jue-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'b-jue-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'b-jue-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
+        { id: 'b-jue-4', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
+        { id: 'b-jue-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
+        { id: 'b-jue-6', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
+        { id: 'b-jue-7', cat: 'Tarde', label: 'FCD work (project)', hora: '17:00–18:30', cls: 'b-fcd' },
+        { id: 'b-jue-8', cat: 'Tarde', label: 'Pasos + audiolibro (de día)', hora: '18:30–19:15', cls: 'b-hab' },
+        { id: 'b-jue-9', cat: 'Noche', label: 'Cena + ducha', hora: '19:30–20:30', cls: 'b-hab' },
+        { id: 'b-jue-10', cat: 'Noche', label: 'DocDoc calls', hora: '20:30–21:30', cls: 'b-doc' },
+        { id: 'b-jue-11', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'b-jue-12', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Viernes', type: '🏋️ Gym · cierre de semana',
+      tip: 'Cierre de semana. Gym después de las 5 — volvé en carro. Noche libre antes del finde.',
+      blocks: [
+        { id: 'b-vie-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'b-vie-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'b-vie-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
+        { id: 'b-vie-4', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
+        { id: 'b-vie-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
+        { id: 'b-vie-6', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
+        { id: 'b-vie-7', cat: 'Tarde', label: 'Ida al gym caminando (todavía de día, 30 min)', hora: '17:00–17:30', cls: 'b-hab' },
+        { id: 'b-vie-8', cat: 'Tarde', label: 'Gym (1h)', hora: '17:30–18:30', cls: 'b-gym' },
+        { id: 'b-vie-9', cat: 'Tarde', label: '🚗 Volver a casa en carro (ya es de noche)', hora: '18:30–18:40', cls: 'b-transp' },
+        { id: 'b-vie-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:00–20:00', cls: 'b-hab' },
+        { id: 'b-vie-11', cat: 'Noche', label: 'Tiempo libre / lectura', hora: '20:00–21:30', cls: 'b-free' },
+        { id: 'b-vie-12', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'b-vie-13', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Sábado', type: '👯 Amigos · descanso',
+      tip: 'Semana B: sábado con amigos cada dos semanas. Si sumás un 4to gym, antes de las 5pm para ir y volver caminando con luz de día.',
+      blocks: [
+        { id: 'b-sab-1', cat: 'Mañana', label: 'Despertar tranquilo', hora: '8:30–9:00', cls: 'b-hab' },
+        { id: 'b-sab-2', cat: 'Mañana', label: 'Desayuno', hora: '9:00–9:30', cls: 'b-hab' },
+        { id: 'b-sab-3', cat: 'Mañana', label: 'Caminata al gym (pasos + audiolibro, 30 min)', hora: '9:30–10:00', cls: 'b-hab' },
+        { id: 'b-sab-3b', cat: 'Mañana', label: 'Gym opcional (4to día, 1h, antes de las 5pm)', hora: '10:00–11:00', cls: 'b-gym' },
+        { id: 'b-sab-4', cat: 'Día', label: 'Amigos / plan libre', hora: '11:30–', cls: 'b-social' },
+        { id: 'b-sab-5', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'b-sab-6', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
+      ]
+    },
+    {
+      name: 'Domingo', type: '🌿 Comida libre · novio',
+      tip: '¡Un tiempo libre a la semana mejora la adherencia! En la noche adelantá el wind down por el martes.',
+      blocks: [
+        { id: 'b-dom-1', cat: 'Mañana', label: 'Despertar tranquilo', hora: '8:30–9:00', cls: 'b-hab' },
+        { id: 'b-dom-2', cat: 'Mañana', label: 'Desayuno', hora: '9:00–9:30', cls: 'b-hab' },
+        { id: 'b-dom-3', cat: 'Día', label: 'Novio / plan libre', hora: '10:00–', cls: 'b-social' },
+        { id: 'b-dom-4', cat: 'Mediodía', label: 'Comida libre (plan nutri)', hora: 'almuerzo', cls: 'b-hab' },
+        { id: 'b-dom-5', cat: 'Noche', label: 'Wind down adelantado', hora: '21:00–21:45', cls: 'b-wind' },
+        { id: 'b-dom-6', cat: 'Noche', label: 'Sueño', hora: '21:45', cls: 'b-sleep' },
+      ]
+    },
+  ]
+};
+
+let state = {};
+let currentWeek = 'a';
+let openDayKey = `body-${currentWeek}-0`;
+
+function weekCodeFromDate(date = new Date()) {
+  const anchor = new Date(2026, 6, 23);
+  const start = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const anchorStart = new Date(anchor.getFullYear(), anchor.getMonth(), anchor.getDate());
+  const diffDays = Math.floor((start - anchorStart) / 86400000);
+  const weekOffset = Math.abs(Math.floor(diffDays / 7)) % 2;
+  return weekOffset === 0 ? 'b' : 'a';
+}
+
+function dayIndexFromParam(param) {
+  const map = { lun: 0, mar: 1, mie: 2, jue: 3, vie: 4, sab: 5, dom: 6 };
+  const key = (param || '').toLowerCase();
+  return Object.prototype.hasOwnProperty.call(map, key) ? map[key] : 0;
+}
+
+function weekFromParam(param) {
+  const key = (param || '').toLowerCase();
+  return key === 'a' || key === 'b' ? key : null;
+}
+
+function preserveScroll(renderFn) {
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
+  renderFn();
+  requestAnimationFrame(() => window.scrollTo(scrollX, scrollY));
+}
+
+function loadState() {
+  try { state = JSON.parse(localStorage.getItem('horario_v2_state') || '{}'); } catch(e) { state = {}; }
+}
+
+const params = new URLSearchParams(window.location.search);
+const requestedDayIndex = dayIndexFromParam(params.get('day'));
+currentWeek = weekFromParam(params.get('week')) || weekCodeFromDate();
+openDayKey = `body-${currentWeek}-${requestedDayIndex}`;
+
+function saveState() {
+  localStorage.setItem('horario_v2_state', JSON.stringify(state));
+}
+
+function renderDays() {
+  const container = document.getElementById('days-container');
+  container.innerHTML = '';
+  const days = weeksData[currentWeek];
+  days.forEach((day, idx) => {
+    const allBlocks = day.blocks;
+    const checked = allBlocks.filter(b => state[b.id]).length;
+    const total = allBlocks.length;
+    const pct = total ? Math.round(checked / total * 100) : 0;
+
+    // Agrupa en secciones consecutivas (sin mezclar categorías no contiguas) para mantener el orden cronológico real
+    const sections = [];
+    allBlocks.forEach(b => {
+      const last = sections[sections.length - 1];
+      if (last && last.cat === b.cat) { last.blocks.push(b); }
+      else { sections.push({ cat: b.cat, blocks: [b] }); }
+    });
+
+    const bodyId = `body-${currentWeek}-${idx}`;
+    const isOpen = openDayKey === bodyId;
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    card.innerHTML = `
+      <div class="day-header ${isOpen ? '' : 'collapsed'}" onclick="toggleDay('${bodyId}', this)">
+        <div>
+          <h2>${day.name} <span style="font-weight:400;font-size:0.8rem">${day.type}</span></h2>
+          <div class="day-meta">${checked}/${total} bloques · ${pct}% completado</div>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="day-body ${isOpen ? '' : 'hidden'}" id="${bodyId}">
+        ${sections.map(sec => `
+          <div class="block-section">
+            <div class="block-title">${sec.cat}</div>
+            ${sec.blocks.map(b => `
+              <div class="block-item ${b.cls} ${state[b.id] ? 'checked' : ''}" onclick="toggleBlock('${b.id}')">
+                <input type="checkbox" id="${b.id}" ${state[b.id] ? 'checked' : ''} onclick="event.stopPropagation(); toggleBlock('${b.id}')"/>
+                <label for="${b.id}">
+                  ${b.label}
+                  <span class="hora">${b.hora}</span>
+                </label>
+              </div>
+            `).join('')}
+          </div>
+        `).join('')}
+        <div class="tip-box">💡 ${day.tip}</div>
+        <button class="reset-day-btn" onclick="resetDay(${idx})">↺ Reiniciar día</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+  updateProgress();
+}
+
+function toggleDay(bodyId, header) {
+  openDayKey = bodyId;
+  document.getElementById(bodyId).classList.toggle('hidden');
+  header.classList.toggle('collapsed');
+}
+
+function toggleBlock(id) {
+  state[id] = !state[id];
+  saveState();
+  preserveScroll(renderDays);
+}
+
+function resetDay(idx) {
+  weeksData[currentWeek][idx].blocks.forEach(b => { delete state[b.id]; });
+  saveState();
+  preserveScroll(renderDays);
+}
+
+function updateProgress() {
+  const all = weeksData[currentWeek].flatMap(d => d.blocks);
+  const checked = all.filter(b => state[b.id]).length;
+  const total = all.length;
+  const pct = total ? Math.round(checked / total * 100) : 0;
+  document.getElementById('prog-text').textContent = `${checked} / ${total} bloques`;
+  document.getElementById('prog-fill').style.width = pct + '%';
+}
+
+function setWeek(w, btn) {
+  currentWeek = w;
+  openDayKey = `body-${currentWeek}-0`;
+  document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  preserveScroll(renderDays);
+}
+
+function syncWeekButtons() {
+  document.querySelectorAll('.week-btn').forEach((btn, idx) => {
+    const week = idx === 0 ? 'a' : 'b';
+    btn.classList.toggle('active', week === currentWeek);
+  });
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['horario','sueno','resumen'][i] === tab);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+loadState();
+renderDays();
+syncWeekButtons();
+</script>
+</body>
+</html>

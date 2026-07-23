@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mi Plan Nutricional</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap');
+  :root {
+    --verde: #4da78c;
+    --verde-claro: #e8f5f2;
+    --verde-oscuro: #2a7a63;
+    --gris: #f4f8fa;
+    --gris-medio: #d9e5ea;
+    --texto: #17313d;
+    --amarillo: #fff8e8;
+    --amarillo-borde: #efd38a;
+    --azul: #dff2ff;
+    --azul-t: #2e76a7;
+    --morado: #eef2ff;
+    --morado-t: #4651a8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Manrope', 'Segoe UI', sans-serif;
+    background: linear-gradient(180deg, #eff9fb 0%, #e8f5ee 42%, #dff1ff 100%);
+    color: var(--texto);
+    min-height: 100vh;
+  }
+
+  header {
+    background: linear-gradient(135deg, #2a7a63 0%, #2e76a7 100%);
+    color: white;
+    padding: 20px 24px;
+    text-align: center;
+    box-shadow: 0 14px 34px rgba(22,48,57,0.14);
+  }
+
+  header h1 { font-size: 1.4rem; font-weight: 700; }
+  header p { font-size: 0.85rem; opacity: 0.8; margin-top: 4px; }
+
+  .tabs {
+    display: flex;
+    background: white;
+    border-bottom: 2px solid var(--gris-medio);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 14px 8px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #888;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .tab.active {
+    color: var(--verde-oscuro);
+    border-bottom-color: var(--verde-oscuro);
+  }
+
+  .tab-content { display: none; padding: 16px; max-width: 700px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  .progress-bar-container {
+    background: white;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: #666;
+    margin-bottom: 6px;
+  }
+
+  .progress-bar {
+    background: var(--gris-medio);
+    border-radius: 999px;
+    height: 10px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    background: var(--verde);
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.4s ease;
+  }
+
+  .day-card {
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    overflow: hidden;
+  }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    cursor: pointer;
+    background: var(--verde-claro);
+    user-select: none;
+  }
+
+  .day-header h2 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--verde-oscuro);
+  }
+
+  .day-header .day-meta {
+    font-size: 0.75rem;
+    color: #666;
+  }
+
+  .day-header .chevron {
+    font-size: 0.9rem;
+    color: var(--verde-oscuro);
+    transition: transform 0.2s;
+  }
+
+  .day-header.collapsed .chevron { transform: rotate(-90deg); }
+
+  .day-body { padding: 0 16px 14px; }
+  .day-body.hidden { display: none; }
+
+  .meal-section { margin-top: 14px; }
+
+  .meal-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #888;
+    margin-bottom: 8px;
+  }
+
+  .meal-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    background: var(--gris);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .meal-item:hover { background: var(--verde-claro); }
+
+  .meal-item.checked {
+    background: #d4edda;
+    text-decoration: line-through;
+    color: #777;
+  }
+
+  .meal-item input[type="checkbox"] {
+    margin-top: 2px;
+    accent-color: var(--verde-oscuro);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .meal-item label {
+    font-size: 0.88rem;
+    line-height: 1.4;
+    cursor: pointer;
+    flex: 1;
+  }
+
+  .meal-item label span.kcal {
+    display: block;
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 2px;
+    text-decoration: none !important;
+  }
+
+  .tip-box {
+    background: var(--amarillo);
+    border-left: 3px solid var(--amarillo-borde);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    color: #7a6000;
+    margin-top: 12px;
+  }
+
+  .reset-day-btn {
+    display: block;
+    width: 100%;
+    margin-top: 14px;
+    padding: 8px;
+    background: none;
+    border: 1px solid var(--gris-medio);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #999;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .reset-day-btn:hover { border-color: #f44; color: #f44; }
+
+  .market-category {
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    overflow: hidden;
+  }
+
+  .market-category-header {
+    padding: 12px 16px;
+    background: var(--verde-claro);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .market-category-header h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--verde-oscuro);
+  }
+
+  .market-category-header .cat-progress {
+    font-size: 0.75rem;
+    color: #666;
+  }
+
+  .market-list { padding: 10px 16px 14px; }
+
+  .market-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    background: var(--gris);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .market-item:hover { background: var(--verde-claro); }
+
+  .market-item.checked {
+    background: #d4edda;
+    text-decoration: line-through;
+    color: #777;
+  }
+
+  .market-item input[type="checkbox"] {
+    accent-color: var(--verde-oscuro);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  .market-item label {
+    font-size: 0.88rem;
+    flex: 1;
+    cursor: pointer;
+  }
+
+  .market-item .qty {
+    font-size: 0.78rem;
+    color: #888;
+    background: white;
+    border-radius: 6px;
+    padding: 2px 7px;
+    border: 1px solid var(--gris-medio);
+    flex-shrink: 0;
+    text-decoration: none !important;
+  }
+
+  .market-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .market-actions button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-clear {
+    background: white;
+    border: 1px solid var(--gris-medio) !important;
+    color: #888;
+  }
+
+  .btn-clear:hover { border-color: #f44 !important; color: #f44; }
+
+  .btn-reset {
+    background: var(--verde-claro);
+    color: var(--verde-oscuro);
+  }
+
+  .btn-reset:hover { background: var(--verde); color: white; }
+
+  .summary-card {
+    background: white;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+
+  .summary-card h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--verde-oscuro);
+    margin-bottom: 12px;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--gris);
+    font-size: 0.85rem;
+  }
+
+  .stat-row:last-child { border-bottom: none; }
+  .stat-row .val { font-weight: 700; color: var(--verde-oscuro); }
+
+  .note-box {
+    background: var(--verde-claro);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--verde-oscuro);
+  }
+
+  .note-box strong { display: block; margin-bottom: 4px; }
+
+  @media (max-width: 720px) {
+    header { padding: 16px 12px; }
+    header h1 { font-size: 1.15rem; line-height: 1.25; }
+    header p { font-size: 0.78rem; line-height: 1.4; }
+    .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tab { min-width: 86px; padding: 12px 6px; font-size: 0.78rem; }
+    .tab-content { padding: 12px; max-width: 100%; }
+    .progress-bar-container { padding: 12px 14px; margin-bottom: 12px; }
+    .progress-label { font-size: 0.76rem; }
+    .day-card, .market-category, .summary-card { border-radius: 12px; }
+    .day-header, .market-category-header { padding: 12px 14px; }
+    .day-header { align-items: flex-start; gap: 8px; }
+    .day-header h2, .market-category-header h3, .summary-card h3 { font-size: 0.9rem; line-height: 1.25; }
+    .day-body, .market-list { padding-left: 14px; padding-right: 14px; padding-bottom: 12px; }
+    .meal-section { margin-top: 12px; }
+    .meal-title { margin-bottom: 6px; }
+    .meal-item, .market-item { padding: 8px 9px; gap: 8px; }
+    .meal-item label, .market-item label { font-size: 0.84rem; line-height: 1.35; }
+    .meal-item label span.kcal, .market-item .qty { font-size: 0.72rem; }
+    .market-actions { flex-direction: column; gap: 8px; }
+    .market-actions button { width: 100%; padding: 11px; font-size: 0.8rem; }
+    .summary-card { padding: 14px; margin-bottom: 12px; }
+    .stat-row { font-size: 0.8rem; align-items: flex-start; gap: 8px; }
+    .stat-row .val { font-size: 0.8rem; }
+    .note-box { padding: 12px; font-size: 0.76rem; line-height: 1.45; }
+  }
+
+  @media (max-width: 430px) {
+    .tab { min-width: 80px; font-size: 0.74rem; }
+    .day-header h2, .market-category-header h3, .summary-card h3 { font-size: 0.86rem; }
+    .progress-label, .day-header .day-meta, .market-category-header .cat-progress { font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🥗 Mi Plan de Recomposición</h1>
+  <p>Marcá tus comidas y tu mercado semana a semana</p>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('menu')">📅 Menú</div>
+  <div class="tab" onclick="switchTab('mercado')">🛒 Mercado</div>
+  <div class="tab" onclick="switchTab('resumen')">📊 Resumen</div>
+</div>
+
+<div id="tab-menu" class="tab-content active">
+  <div class="progress-bar-container">
+    <div class="progress-label">
+      <span>Progreso semanal</span>
+      <span id="menu-progress-text">0 / 0 comidas</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="menu-progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+  <div id="days-container"></div>
+</div>
+
+<div id="tab-mercado" class="tab-content">
+  <div class="progress-bar-container">
+    <div class="progress-label">
+      <span>Compras completadas</span>
+      <span id="market-progress-text">0 / 0 ítems</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="market-progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="market-actions">
+    <button class="btn-reset" onclick="resetMarket()">↺ Reiniciar lista</button>
+    <button class="btn-clear" onclick="clearMarket()">✓ Marcar todo</button>
+  </div>
+  <div id="market-container"></div>
+</div>
+
+<div id="tab-resumen" class="tab-content">
+  <div class="summary-card">
+    <h3>🎯 Objetivos diarios</h3>
+    <div class="stat-row"><span>Calorías</span><span class="val">1500–1650 kcal</span></div>
+    <div class="stat-row"><span>Proteína</span><span class="val">100–110 g</span></div>
+    <div class="stat-row"><span>Déficit</span><span class="val">Moderado</span></div>
+    <div class="stat-row"><span>Estilo</span><span class="val">Recomposición corporal</span></div>
+  </div>
+  <div class="summary-card">
+    <h3>⚡ Suplementación</h3>
+    <div class="stat-row"><span>Creatina</span><span class="val">3–5 g / día</span></div>
+    <div class="stat-row"><span>Proteína en polvo</span><span class="val">Si no llegás a la meta</span></div>
+  </div>
+  <div class="summary-card">
+    <h3>🏋️ Protocolo de entrenamiento</h3>
+    <div class="stat-row"><span>Antes de entrenar</span><span class="val">Café + banano ~30 min antes (17:00)</span></div>
+    <div class="stat-row"><span>Post-entrenamiento</span><span class="val">Proteína en cena (1–2 h después)</span></div>
+    <div class="stat-row"><span>Días sin entrenar</span><span class="val">Menos carbs en cena</span></div>
+  </div>
+  <div class="note-box">
+    <strong>💡 Recordá</strong>
+    Alérgica al huevo. Entrenás tarde (17:15–18:30): el banano pre-gym va a las 17:00, no en el desayuno. Distribuí la proteína en 3–4 momentos del día (25–35 g cada uno). La constancia importa más que la perfección.
+  </div>
+</div>
+
+<script>
+const days = [
+  {
+    id: 'lun',
+    name: 'Lunes',
+    type: '🏋️ Entrenamiento (tarde)',
+    meals: [
+      { id: 'lun-des', meal: 'Desayuno', items: [
+        { id: 'lun-des-1', text: 'Yogur griego (200 g)', detail: '~24 g proteína' },
+        { id: 'lun-des-2', text: 'Avena en hojuelas (40 g)', detail: '~6 g proteína' },
+        { id: 'lun-des-3', text: 'Fresas o fruta de temporada', detail: 'Sin el banano — va al pre-gym' },
+      ]},
+      { id: 'lun-alm', meal: 'Almuerzo', items: [
+        { id: 'lun-alm-1', text: 'Pechuga de pollo a la plancha (150 g)', detail: '~38 g proteína' },
+        { id: 'lun-alm-2', text: 'Arroz cocido (½ taza)', detail: 'Carbohidrato base' },
+        { id: 'lun-alm-3', text: 'Ensalada de tomate, pepino y zanahoria', detail: 'Sin límite' },
+        { id: 'lun-alm-4', text: '¼ aguacate', detail: 'Grasa saludable' },
+      ]},
+      { id: 'lun-pre', meal: 'Pre-gym (17:00)', items: [
+        { id: 'lun-pre-2', text: 'Banano', detail: 'Energía rápida antes del gym' },
+      ]},
+      { id: 'lun-cen', meal: 'Cena (post-gym)', items: [
+        { id: 'lun-cen-1', text: 'Pollo desmechado o muslo sin piel (130 g)', detail: '~30 g proteína' },
+        { id: 'lun-cen-2', text: 'Papa cocida pequeña o yuca (100 g)', detail: 'Recuperación post-entreno' },
+        { id: 'lun-cen-3', text: 'Brócoli o espinaca salteada', detail: 'Al gusto' },
+      ]},
+    ],
+    tip: 'Día de gym tarde: el banano viaja del desayuno al pre-gym (17:00). La cena es tu ventana de recuperación.'
+  },
+  {
+    id: 'mar',
+    name: 'Martes',
+    type: '😴 Descanso / Cardio ligero',
+    meals: [
+      { id: 'mar-des', meal: 'Desayuno', items: [
+        { id: 'mar-des-1', text: 'Yogur griego (200 g)', detail: '~24 g proteína' },
+        { id: 'mar-des-2', text: 'Avena (30 g)', detail: 'Menos que el día de entreno' },
+        { id: 'mar-des-3', text: 'Fruta de temporada', detail: 'Al gusto' },
+      ]},
+      { id: 'mar-alm', meal: 'Almuerzo', items: [
+        { id: 'mar-alm-1', text: 'Lentejas guisadas (1 taza cocida)', detail: '~18 g proteína' },
+        { id: 'mar-alm-2', text: 'Arroz (⅓ taza)', detail: 'Porción reducida hoy' },
+        { id: 'mar-alm-3', text: 'Ensalada con aceite de oliva', detail: 'Grasa saludable' },
+      ]},
+      { id: 'mar-mer', meal: 'Merienda', items: [
+        { id: 'mar-mer-1', text: 'Yogur griego (150 g)', detail: '~18 g proteína' },
+        { id: 'mar-mer-2', text: 'Maní sin sal (pequeño puñado)', detail: '~7 g proteína' },
+      ]},
+      { id: 'mar-cen', meal: 'Cena', items: [
+        { id: 'mar-cen-1', text: 'Filete de tilapia o mojarra (150 g)', detail: '~32 g proteína' },
+        { id: 'mar-cen-2', text: 'Ensalada grande', detail: 'Libre de restricciones' },
+        { id: 'mar-cen-3', text: 'Papa pequeña (opcional)', detail: 'Solo si sentís hambre' },
+      ]},
+    ],
+    tip: 'Día de descanso: reducí un poco los carbohidratos en cena. El déficit se gestiona solo ajustando estas porciones.'
+  },
+  {
+    id: 'mie',
+    name: 'Miércoles',
+    type: '🏋️ Entrenamiento (tarde)',
+    meals: [
+      { id: 'mie-des', meal: 'Desayuno', items: [
+        { id: 'mie-des-1', text: 'Batido: proteína en polvo (1 scoop)', detail: '~24 g proteína (opcional)' },
+        { id: 'mie-des-2', text: 'Avena (40 g)', detail: 'O sustituí por yogur + avena + fruta' },
+      ]},
+      { id: 'mie-alm', meal: 'Almuerzo', items: [
+        { id: 'mie-alm-1', text: 'Pechuga de pollo (150 g)', detail: '~38 g proteína' },
+        { id: 'mie-alm-2', text: 'Fríjoles (½ taza)', detail: '~8 g proteína extra' },
+        { id: 'mie-alm-3', text: 'Arroz (½ taza)', detail: 'Carbohidrato' },
+        { id: 'mie-alm-4', text: 'Ensalada + aguacate', detail: 'Fibra y grasa buena' },
+      ]},
+      { id: 'mie-pre', meal: 'Pre-gym (17:00)', items: [
+        { id: 'mie-pre-2', text: 'Banano', detail: 'Energía rápida antes del gym' },
+      ]},
+      { id: 'mie-cen', meal: 'Cena (post-gym)', items: [
+        { id: 'mie-cen-1', text: 'Lentejas o pollo (130 g)', detail: '~25-30 g proteína' },
+        { id: 'mie-cen-2', text: 'Verduras salteadas', detail: 'Brócoli, espinaca, zanahoria' },
+        { id: 'mie-cen-3', text: 'Yuca o papa (100 g)', detail: 'Recuperación post-entreno' },
+      ]},
+    ],
+    tip: 'Podés rotar el desayuno: un día yogur + avena, otro día batido. El banano va siempre al pre-gym a las 17:00.'
+  },
+  {
+    id: 'jue',
+    name: 'Jueves',
+    type: '😴 Descanso / Cardio ligero',
+    meals: [
+      { id: 'jue-des', meal: 'Desayuno', items: [
+        { id: 'jue-des-1', text: 'Yogur griego (200 g)', detail: '~24 g proteína' },
+        { id: 'jue-des-2', text: 'Avena (30 g) + fruta', detail: 'Desayuno base' },
+      ]},
+      { id: 'jue-alm', meal: 'Almuerzo', items: [
+        { id: 'jue-alm-1', text: 'Pechuga de pollo (150 g)', detail: '~38 g proteína' },
+        { id: 'jue-alm-2', text: 'Arroz (½ taza) + ensalada', detail: 'Verduras libres' },
+        { id: 'jue-alm-3', text: '¼ aguacate', detail: 'Grasa saludable' },
+      ]},
+      { id: 'jue-mer', meal: 'Merienda', items: [
+        { id: 'jue-mer-1', text: 'Atún en agua (1 lata ~120 g)', detail: '~28 g proteína' },
+        { id: 'jue-mer-2', text: 'Galletas integrales o pan', detail: 'Pequeña porción' },
+      ]},
+      { id: 'jue-cen', meal: 'Cena', items: [
+        { id: 'jue-cen-1', text: 'Pescado a la plancha (150 g)', detail: '~32 g proteína' },
+        { id: 'jue-cen-2', text: 'Ensalada grande con limón y aceite', detail: 'Sin restricción' },
+      ]},
+    ],
+    tip: 'Día de descanso: cena ligera sin carbohidrato fuerte. El déficit trabaja a tu favor esta noche.'
+  },
+  {
+    id: 'vie',
+    name: 'Viernes',
+    type: '🏋️ Entrenamiento (tarde)',
+    meals: [
+      { id: 'vie-des', meal: 'Desayuno', items: [
+        { id: 'vie-des-1', text: 'Yogur griego (200 g)', detail: '~24 g proteína' },
+        { id: 'vie-des-2', text: 'Avena (40 g) + fresas', detail: 'Sin banano — va al pre-gym' },
+      ]},
+      { id: 'vie-alm', meal: 'Almuerzo', items: [
+        { id: 'vie-alm-1', text: 'Pollo al horno o a la plancha (150 g)', detail: '~38 g proteína' },
+        { id: 'vie-alm-2', text: 'Papa cocida (100 g)', detail: 'Carbohidrato' },
+        { id: 'vie-alm-3', text: 'Ensalada grande', detail: 'Al gusto' },
+      ]},
+      { id: 'vie-pre', meal: 'Pre-gym (17:00)', items: [
+        { id: 'vie-pre-2', text: 'Banano', detail: 'Energía rápida antes del gym' },
+      ]},
+      { id: 'vie-mer', meal: 'Merienda', items: [
+        { id: 'vie-mer-1', text: 'Atún (1 lata) + galletas integrales', detail: '~28 g proteína' },
+      ]},
+      { id: 'vie-cen', meal: 'Cena (post-gym)', items: [
+        { id: 'vie-cen-1', text: 'Lentejas guisadas (1 taza)', detail: '~18 g proteína' },
+        { id: 'vie-cen-2', text: 'Verduras salteadas', detail: 'Al gusto' },
+        { id: 'vie-cen-3', text: 'Arroz (⅓ taza)', detail: 'Recuperación post-entreno' },
+      ]},
+    ],
+    tip: 'Último día de gym de la semana. Banano a las 17:00, cena con lentejas para cerrar fuerte en proteína.'
+  },
+  {
+    id: 'sab',
+    name: 'Sábado',
+    type: '🏋️ Entrenamiento o actividad libre',
+    meals: [
+      { id: 'sab-des', meal: 'Desayuno', items: [
+        { id: 'sab-des-1', text: 'Batido: proteína en polvo + avena', detail: '~30 g proteína' },
+        { id: 'sab-des-2', text: 'Leche o agua al gusto', detail: 'Para el batido' },
+      ]},
+      { id: 'sab-alm', meal: 'Almuerzo', items: [
+        { id: 'sab-alm-1', text: 'Pollo (150 g)', detail: '~38 g proteína' },
+        { id: 'sab-alm-2', text: 'Fríjoles (½ taza)', detail: '~8 g proteína' },
+        { id: 'sab-alm-3', text: 'Arroz + ensalada + aguacate', detail: 'Almuerzo completo' },
+      ]},
+      { id: 'sab-pre', meal: 'Pre-gym (si entrenás)', items: [
+        { id: 'sab-pre-1', text: 'Café + banano', detail: 'Solo si vas al gym' },
+      ]},
+      { id: 'sab-mer', meal: 'Merienda', items: [
+        { id: 'sab-mer-1', text: 'Atún + fruta', detail: 'Simple y proteico' },
+      ]},
+      { id: 'sab-cen', meal: 'Cena', items: [
+        { id: 'sab-cen-1', text: 'Lentejas o pollo (130 g)', detail: '~25-30 g proteína' },
+        { id: 'sab-cen-2', text: 'Verduras salteadas', detail: 'Al gusto' },
+      ]},
+    ],
+    tip: 'Sábado flexible: si salís a comer, priorizá proteína. El banano va al pre-gym solo si entrenás.'
+  },
+  {
+    id: 'dom',
+    name: 'Domingo',
+    type: '🌿 Comida libre moderada',
+    meals: [
+      { id: 'dom-des', meal: 'Desayuno', items: [
+        { id: 'dom-des-1', text: 'Yogur griego + fruta + avena', detail: 'Mantené el desayuno base' },
+      ]},
+      { id: 'dom-alm', meal: 'Almuerzo libre', items: [
+        { id: 'dom-alm-1', text: '🎉 Comida libre moderada', detail: 'Sin obsesionarte. Disfrutá.' },
+      ]},
+      { id: 'dom-cen', meal: 'Cena', items: [
+        { id: 'dom-cen-1', text: 'Pollo o lentejas + verduras', detail: 'Volvé al plan en la cena' },
+        { id: 'dom-cen-2', text: 'Ensalada o verduras', detail: 'Ligero para cerrar el día' },
+      ]},
+    ],
+    tip: '¡Un tiempo libre a la semana mejora la adherencia! No es trampa, es parte del plan.'
+  }
+];
+
+const marketCategories = [
+  {
+    id: 'proteinas',
+    name: '🍗 Proteínas',
+    items: [
+      { id: 'mk-p1', text: 'Pechuga de pollo', qty: '~1.5 kg (semanal)' },
+      { id: 'mk-p2', text: 'Muslo de pollo sin piel', qty: '~500 g' },
+      { id: 'mk-p3', text: 'Atún en agua', qty: '4–5 latas' },
+      { id: 'mk-p4', text: 'Yogur griego', qty: '6–7 unidades (200 g c/u)' },
+      { id: 'mk-p5', text: 'Tilapia o mojarra', qty: '300–400 g (2 porciones)' },
+      { id: 'mk-p6', text: 'Maní sin sal', qty: '200 g' },
+    ]
+  },
+  {
+    id: 'legumbres',
+    name: '🫘 Legumbres',
+    items: [
+      { id: 'mk-l1', text: 'Lentejas secas', qty: '500 g' },
+      { id: 'mk-l2', text: 'Fríjoles (cargamanto o bola roja)', qty: '500 g' },
+    ]
+  },
+  {
+    id: 'carbohidratos',
+    name: '🌾 Carbohidratos',
+    items: [
+      { id: 'mk-c1', text: 'Avena en hojuelas', qty: '500 g' },
+      { id: 'mk-c2', text: 'Arroz blanco o integral', qty: '1 kg' },
+      { id: 'mk-c3', text: 'Papa pastusa o criolla', qty: '1 kg' },
+      { id: 'mk-c4', text: 'Yuca', qty: '500 g' },
+      { id: 'mk-c5', text: 'Pan integral o galletas integrales', qty: '1 paquete' },
+      { id: 'mk-c6', text: 'Banano', qty: '1 racimo (~6–8 unidades)' },
+    ]
+  },
+  {
+    id: 'verduras',
+    name: '🥦 Verduras y ensalada',
+    items: [
+      { id: 'mk-v1', text: 'Brócoli', qty: '1 cabeza' },
+      { id: 'mk-v2', text: 'Espinaca', qty: '1 bolsa' },
+      { id: 'mk-v3', text: 'Tomate', qty: '4–5 unidades' },
+      { id: 'mk-v4', text: 'Pepino cohombro', qty: '2–3 unidades' },
+      { id: 'mk-v5', text: 'Zanahoria', qty: '3–4 unidades' },
+      { id: 'mk-v6', text: 'Cebolla cabezona', qty: '1–2 unidades' },
+      { id: 'mk-v7', text: 'Ajo', qty: '1 cabeza' },
+    ]
+  },
+  {
+    id: 'frutas',
+    name: '🍓 Frutas',
+    items: [
+      { id: 'mk-f1', text: 'Fresas', qty: '1 punnet (~250 g)' },
+      { id: 'mk-f2', text: 'Manzana o pera', qty: '3–4 unidades' },
+      { id: 'mk-f3', text: 'Limones', qty: '5–6 unidades' },
+    ]
+  },
+  {
+    id: 'grasas',
+    name: '🥑 Grasas y condimentos',
+    items: [
+      { id: 'mk-g1', text: 'Aguacate', qty: '3–4 unidades' },
+      { id: 'mk-g2', text: 'Aceite de oliva', qty: '1 botella pequeña' },
+      { id: 'mk-g3', text: 'Sal, pimienta, comino', qty: 'Al gusto (reponer si falta)' },
+      { id: 'mk-g4', text: 'Café', qty: 'Al gusto' },
+    ]
+  },
+  {
+    id: 'suplementos',
+    name: '💊 Suplementos (opcionales)',
+    items: [
+      { id: 'mk-s1', text: 'Creatina monohidratada', qty: '3–5 g / día' },
+      { id: 'mk-s2', text: 'Proteína en polvo', qty: 'Solo si la necesitás' },
+    ]
+  }
+];
+
+let state = {};
+let openDayId = days[0].id;
+
+function dayIdFromParam(param) {
+  const map = { lun: 'lun', mar: 'mar', mie: 'mie', jue: 'jue', vie: 'vie', sab: 'sab', dom: 'dom' };
+  return map[(param || '').toLowerCase()] || null;
+}
+
+function preserveScroll(renderFn) {
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
+  renderFn();
+  requestAnimationFrame(() => window.scrollTo(scrollX, scrollY));
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('nutriplan_state');
+    state = saved ? JSON.parse(saved) : {};
+  } catch(e) { state = {}; }
+}
+
+const requestedDayId = dayIdFromParam(new URLSearchParams(window.location.search).get('day'));
+if (requestedDayId) {
+  openDayId = requestedDayId;
+}
+
+function saveState() {
+  localStorage.setItem('nutriplan_state', JSON.stringify(state));
+}
+
+function renderMenu() {
+  const container = document.getElementById('days-container');
+  container.innerHTML = '';
+  days.forEach((day, idx) => {
+    const card = document.createElement('div');
+    card.className = 'day-card';
+
+    const allItems = day.meals.flatMap(m => m.items);
+    const checked = allItems.filter(it => state[it.id]).length;
+    const total = allItems.length;
+    const pct = total ? Math.round(checked/total*100) : 0;
+
+    const isOpen = openDayId === day.id;
+    card.innerHTML = `
+      <div class="day-header ${isOpen ? '' : 'collapsed'}" onclick="toggleDay('day-body-${day.id}', this)">
+        <div>
+          <h2>${day.name} <span style="font-weight:400;font-size:0.8rem">${day.type}</span></h2>
+          <div class="day-meta">${checked}/${total} comidas · ${pct}% completado</div>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="day-body ${isOpen ? '' : 'hidden'}" id="day-body-${day.id}">
+        ${day.meals.map(m => `
+          <div class="meal-section">
+            <div class="meal-title">${m.meal}</div>
+            ${m.items.map(it => `
+              <div class="meal-item ${state[it.id] ? 'checked' : ''}" onclick="toggleItem('${it.id}', 'menu')">
+                <input type="checkbox" id="${it.id}" ${state[it.id] ? 'checked' : ''} onclick="event.stopPropagation(); toggleItem('${it.id}', 'menu')"/>
+                <label for="${it.id}">
+                  ${it.text}
+                  <span class="kcal">${it.detail}</span>
+                </label>
+              </div>
+            `).join('')}
+          </div>
+        `).join('')}
+        <div class="tip-box">💡 ${day.tip}</div>
+        <button class="reset-day-btn" onclick="resetDay('${day.id}')">↺ Reiniciar día</button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+  updateMenuProgress();
+}
+
+function toggleDay(bodyId, header) {
+  const body = document.getElementById(bodyId);
+  openDayId = bodyId.replace('day-body-', '');
+  body.classList.toggle('hidden');
+  header.classList.toggle('collapsed');
+}
+
+function toggleItem(id, source) {
+  state[id] = !state[id];
+  saveState();
+  if (source === 'menu') preserveScroll(renderMenu);
+  else preserveScroll(renderMarket);
+}
+
+function resetDay(dayId) {
+  const day = days.find(d => d.id === dayId);
+  day.meals.flatMap(m => m.items).forEach(it => { delete state[it.id]; });
+  saveState();
+  preserveScroll(renderMenu);
+}
+
+function updateMenuProgress() {
+  const all = days.flatMap(d => d.meals.flatMap(m => m.items));
+  const checked = all.filter(it => state[it.id]).length;
+  const total = all.length;
+  const pct = total ? Math.round(checked/total*100) : 0;
+  document.getElementById('menu-progress-text').textContent = `${checked} / ${total} comidas`;
+  document.getElementById('menu-progress-fill').style.width = pct + '%';
+}
+
+function renderMarket() {
+  const container = document.getElementById('market-container');
+  container.innerHTML = '';
+  marketCategories.forEach(cat => {
+    const checked = cat.items.filter(it => state[it.id]).length;
+    const total = cat.items.length;
+    const div = document.createElement('div');
+    div.className = 'market-category';
+    div.innerHTML = `
+      <div class="market-category-header" onclick="toggleCat('mcat-${cat.id}')">
+        <h3>${cat.name}</h3>
+        <span class="cat-progress">${checked}/${total}</span>
+      </div>
+      <div class="market-list" id="mcat-${cat.id}">
+        ${cat.items.map(it => `
+          <div class="market-item ${state[it.id] ? 'checked' : ''}" onclick="toggleItem('${it.id}', 'market')">
+            <input type="checkbox" id="${it.id}" ${state[it.id] ? 'checked' : ''} onclick="event.stopPropagation(); toggleItem('${it.id}', 'market')"/>
+            <label for="${it.id}">${it.text}</label>
+            <span class="qty">${it.qty}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(div);
+  });
+  updateMarketProgress();
+}
+
+function toggleCat(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'none' ? '' : 'none';
+}
+
+function resetMarket() {
+  marketCategories.flatMap(c => c.items).forEach(it => { delete state[it.id]; });
+  saveState();
+  preserveScroll(renderMarket);
+}
+
+function clearMarket() {
+  marketCategories.flatMap(c => c.items).forEach(it => { state[it.id] = true; });
+  saveState();
+  preserveScroll(renderMarket);
+}
+
+function updateMarketProgress() {
+  const all = marketCategories.flatMap(c => c.items);
+  const checked = all.filter(it => state[it.id]).length;
+  const total = all.length;
+  const pct = total ? Math.round(checked/total*100) : 0;
+  document.getElementById('market-progress-text').textContent = `${checked} / ${total} ítems`;
+  document.getElementById('market-progress-fill').style.width = pct + '%';
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['menu','mercado','resumen'][i] === tab);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+loadState();
+renderMenu();
+renderMarket();
+</script>
+</body>
+</html>
