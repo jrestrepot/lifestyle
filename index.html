@@ -1,555 +1,279 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="theme-color" content="#2e7d5e"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Mi Gym"/>
-<link rel="manifest" href="manifest.json"/>
-<link rel="apple-touch-icon" href="icon-192.png"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mi Rutina de Gym</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#9b7cff" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Mi Lifestyle" />
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<title>Mi Lifestyle</title>
 <style>
-:root{--verde:#4caf87;--verde-claro:#e8f5ee;--verde-oscuro:#2e7d5e;--gris:#f4f4f4;--gris-medio:#ddd;--texto:#2c2c2c;--amarillo:#fff8e1;--amarillo-borde:#ffe082;--rosa:#FBEAF0;--rosa-t:#72243E;--rosa-borde:#D4537E;--azul:#E6F1FB;--azul-t:#0C447C;--azul-borde:#378ADD;--morado:#EEEDFE;--morado-t:#3C3489;--rojo-bg:#fcebeb;--rojo-t:#a32d2d;--rojo-borde:#e24b4a;--naranja-bg:#FAEEDA;--naranja-t:#633806;}
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap');
+:root{
+  --bg-0:#f6f1ff;
+  --bg-1:#edf3ff;
+  --bg-2:#e9f8f3;
+  --card:rgba(255,255,255,0.66);
+  --stroke:rgba(145,119,210,0.22);
+  --text:#17313d;
+  --muted:#5f7680;
+  --green:#4da78c;
+  --green-deep:#2a7a63;
+  --blue:#7ec7e8;
+  --blue-deep:#2e76a7;
+  --purple:#8f6cff;
+  --purple-deep:#6b4fd6;
+  --shadow:0 24px 80px rgba(22,48,57,0.12);
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',sans-serif;background:#f0f4f2;color:var(--texto);min-height:100vh;}
-header{background:var(--verde-oscuro);color:white;padding:20px 24px;text-align:center;}
-header h1{font-size:1.4rem;font-weight:700;}
-header p{font-size:0.85rem;opacity:0.8;margin-top:4px;}
-.tabs{display:flex;background:white;border-bottom:2px solid var(--gris-medio);position:sticky;top:0;z-index:100;overflow-x:auto;}
-.tab{flex:1;min-width:70px;padding:13px 5px;text-align:center;font-size:0.8rem;font-weight:600;cursor:pointer;color:#888;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap;}
-.tab.active{color:var(--verde-oscuro);border-bottom-color:var(--verde-oscuro);}
-.tab-content{display:none;padding:16px;max-width:700px;margin:0 auto;}
-.tab-content.active{display:block;}
-.week-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
-.day-pill{border-radius:10px;padding:10px 8px;text-align:center;border:1.5px solid transparent;}
-.day-pill .pname{font-size:0.75rem;font-weight:700;margin-bottom:2px;}
-.day-pill .ptype{font-size:0.68rem;opacity:0.85;}
-.pill-inf{background:var(--rosa);color:var(--rosa-t);border-color:var(--rosa-borde);}
-.pill-sup{background:var(--azul);color:var(--azul-t);border-color:var(--azul-borde);}
-.pill-des{background:var(--gris);color:#888;border-color:var(--gris-medio);}
-.legend{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;font-size:0.75rem;color:#666;margin-bottom:16px;}
-.leg{display:flex;align-items:center;gap:5px;}
-.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-.info-box{border-radius:0 10px 10px 0;padding:12px 14px;margin-bottom:14px;font-size:0.8rem;line-height:1.6;}
-.info-box.danger{background:var(--rojo-bg);border-left:3px solid var(--rojo-borde);color:var(--rojo-t);}
-.info-box.accent{background:var(--azul);border-left:3px solid var(--azul-borde);color:var(--azul-t);}
-.info-box.pro{background:var(--morado);border-left:3px solid #7F77DD;color:var(--morado-t);}
-.info-box strong{display:block;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px;}
-.info-item{display:flex;gap:5px;align-items:flex-start;}
-.info-item::before{content:'x';font-size:0.7rem;flex-shrink:0;margin-top:1px;}
-.info-box.accent .info-item::before,.info-box.pro .info-item::before{content:'-';font-weight:900;}
-.progress-bar-container{background:white;border-radius:12px;padding:14px 16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
-.progress-label{display:flex;justify-content:space-between;font-size:0.8rem;color:#666;margin-bottom:6px;}
-.progress-bar{background:var(--gris-medio);border-radius:999px;height:10px;overflow:hidden;}
-.progress-fill{background:var(--verde);height:100%;border-radius:999px;transition:width 0.4s ease;}
-.day-card{background:white;border-radius:14px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,0.07);overflow:hidden;}
-.day-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;user-select:none;}
-.day-header.inf{background:var(--rosa);}
-.day-header.sup{background:var(--azul);}
-.day-header h2{font-size:0.95rem;font-weight:700;}
-.day-header.inf h2{color:var(--rosa-t);}
-.day-header.sup h2{color:var(--azul-t);}
-.day-header .day-meta{font-size:0.72rem;color:#666;margin-top:2px;}
-.day-body{padding:0 16px 14px;}
-.muscle-row{display:flex;flex-wrap:wrap;gap:5px;padding:12px 0 4px;border-bottom:1px solid var(--gris);margin-bottom:4px;}
-.muscle-tag{font-size:0.7rem;padding:2px 8px;border-radius:20px;background:var(--gris);color:#555;border:0.5px solid var(--gris-medio);}
-.block-section{margin-top:12px;}
-.block-label{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#999;margin-bottom:8px;margin-top:14px;}
-.ex-item{border-radius:8px;margin-bottom:8px;background:var(--gris);border:1px solid transparent;overflow:hidden;}
-.ex-item.main-inf{border-color:var(--rosa-borde);background:#fef5f8;}
-.ex-item.main-sup{border-color:var(--azul-borde);background:#f0f7fe;}
-.ex-top{display:flex;align-items:flex-start;gap:10px;padding:9px 10px;cursor:pointer;}
-.ex-item.checked .ex-name{text-decoration:line-through;opacity:0.5;}
-.ex-item input[type="checkbox"]{margin-top:3px;accent-color:var(--verde-oscuro);width:15px;height:15px;flex-shrink:0;cursor:pointer;}
-.ex-content{flex:1;}
-.ex-name{font-size:0.86rem;font-weight:600;color:var(--texto);}
-.ex-note{font-size:0.74rem;color:#777;margin-top:2px;line-height:1.4;}
-.ex-warn{font-size:0.68rem;color:var(--naranja-t);background:var(--naranja-bg);border-radius:4px;padding:1px 6px;display:inline-block;margin-top:3px;}
-.ex-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;}
-.ex-sets{font-size:0.74rem;font-weight:700;padding:3px 8px;border-radius:6px;white-space:nowrap;}
-.sets-inf{background:var(--rosa);color:var(--rosa-t);}
-.sets-sup{background:var(--azul);color:var(--azul-t);}
-.sets-core{background:var(--morado);color:var(--morado-t);}
-.principal-tag{font-size:0.62rem;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:5px;vertical-align:middle;}
-.ptag-inf{background:var(--rosa-borde);color:white;}
-.ptag-sup{background:var(--azul-borde);color:white;}
-.weight-toggle{font-size:0.7rem;color:var(--verde-oscuro);cursor:pointer;border:1px solid var(--gris-medio);background:white;padding:2px 7px;border-radius:6px;font-weight:600;white-space:nowrap;}
-.weight-toggle:hover{background:var(--verde-claro);border-color:var(--verde);}
-.weight-toggle.has-data{border-color:var(--verde);color:var(--verde-oscuro);background:var(--verde-claro);}
-/* WEIGHT PANEL */
-.weight-panel{border-top:1px solid var(--gris-medio);padding:12px 10px 14px;background:#fafafa;}
-.weight-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.weight-panel-title{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#888;}
-.week-nav-row{display:flex;align-items:center;gap:6px;}
-.week-nav-row span{font-size:0.74rem;color:#555;font-weight:600;min-width:64px;text-align:center;}
-.wnav{background:none;border:1px solid var(--gris-medio);border-radius:6px;padding:2px 9px;font-size:0.78rem;cursor:pointer;color:#555;transition:all 0.15s;}
-.wnav:hover:not(:disabled){border-color:var(--verde-oscuro);color:var(--verde-oscuro);}
-.wnav:disabled{opacity:0.3;cursor:default;}
-.series-grid{display:flex;flex-direction:column;gap:8px;}
-.serie-row{display:grid;grid-template-columns:24px 1fr 1fr 60px;gap:6px;align-items:center;}
-.serie-num{font-size:0.7rem;font-weight:700;color:#bbb;text-align:center;}
-.serie-input-wrap{display:flex;flex-direction:column;gap:2px;}
-.serie-input-label{font-size:0.62rem;color:#bbb;text-align:center;}
-.serie-input{width:100%;border:1.5px solid var(--gris-medio);border-radius:7px;padding:6px 4px;font-size:0.82rem;font-family:inherit;text-align:center;background:white;color:var(--texto);transition:border-color 0.15s;}
-.serie-input:focus{outline:none;border-color:var(--verde-oscuro);}
-.serie-input.improved{border-color:var(--verde);background:var(--verde-claro);}
-.serie-input[readonly]{background:#f2f2f2;color:#aaa;}
-.prev-cell{font-size:0.7rem;color:#bbb;text-align:center;line-height:1.4;}
-.prev-cell .prev-lbl{font-size:0.6rem;color:#ccc;display:block;margin-bottom:1px;}
-.history-note{font-size:0.7rem;color:#bbb;text-align:center;margin-top:10px;font-style:italic;}
-/* TIP / RESET */
-.tip-box{background:var(--amarillo);border-left:3px solid var(--amarillo-borde);border-radius:0 8px 8px 0;padding:10px 12px;font-size:0.79rem;color:#7a6000;margin-top:14px;line-height:1.5;}
-.reset-btn{display:block;width:100%;margin-top:12px;padding:8px;background:none;border:1px solid var(--gris-medio);border-radius:8px;font-size:0.78rem;color:#999;cursor:pointer;transition:all 0.2s;}
-.reset-btn:hover{border-color:#f44;color:#f44;}
-/* PROGRESION */
-.prog-filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.pf-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--gris-medio);background:white;font-size:0.78rem;cursor:pointer;color:#666;transition:all 0.15s;}
-.pf-btn.act-all{background:var(--verde-claro);color:var(--verde-oscuro);border-color:var(--verde);}
-.pf-btn.act-inf{background:var(--rosa);color:var(--rosa-t);border-color:var(--rosa-borde);}
-.pf-btn.act-sup{background:var(--azul);color:var(--azul-t);border-color:var(--azul-borde);}
-.pf-btn.act-core{background:var(--morado);color:var(--morado-t);border-color:#7F77DD;}
-.prog-card{background:white;border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
-.prog-card-name{font-size:0.88rem;font-weight:700;color:var(--texto);margin-bottom:2px;}
-.prog-card-sub{font-size:0.7rem;color:#aaa;margin-bottom:10px;}
-.prog-weeks-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;}
-.prog-wk{min-width:58px;border-radius:8px;padding:7px 6px;background:var(--gris);text-align:center;flex-shrink:0;border:1.5px solid transparent;}
-.prog-wk.current{border-color:var(--verde-medio, #4caf87);}
-.prog-wk.filled{background:var(--verde-claro);}
-.prog-wk .pw-lbl{font-size:0.6rem;color:#bbb;margin-bottom:2px;}
-.prog-wk.filled .pw-lbl{color:var(--verde-oscuro);}
-.prog-wk .pw-kg{font-size:0.84rem;font-weight:700;color:#ccc;}
-.prog-wk.filled .pw-kg{color:var(--verde-oscuro);}
-.prog-wk .pw-reps{font-size:0.62rem;color:#bbb;}
-.prog-wk.filled .pw-reps{color:#5a9e7a;}
-.prog-empty{font-size:0.78rem;color:#bbb;text-align:center;padding:24px 0;}
-.prog-no-data{font-size:0.7rem;color:#ccc;font-style:italic;margin-top:6px;}
-/* RESUMEN */
-.summary-card{background:white;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,0.07);}
-.summary-card h3{font-size:0.85rem;font-weight:700;color:var(--verde-oscuro);margin-bottom:12px;}
-.stat-row{display:flex;justify-content:space-between;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--gris);font-size:0.84rem;gap:8px;}
-.stat-row:last-child{border-bottom:none;}
-.stat-row .val{font-weight:700;color:var(--verde-oscuro);text-align:right;}
-.stat-row .danger{color:var(--rojo-t);font-weight:700;}
-.note-box{background:var(--verde-claro);border-radius:10px;padding:12px 14px;font-size:0.81rem;line-height:1.6;color:var(--verde-oscuro);}
-.note-box strong{display:block;margin-bottom:4px;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Manrope','Segoe UI',sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 16% 14%, rgba(143,108,255,0.20), transparent 26%),
+    radial-gradient(circle at 12% 12%, rgba(126,199,232,0.28), transparent 28%),
+    radial-gradient(circle at 88% 8%, rgba(120,214,174,0.18), transparent 24%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 42%, var(--bg-2) 100%);
+}
+.shell{max-width:1180px;margin:0 auto;padding:24px 16px 40px;}
+.hero{
+  position:relative;overflow:hidden;border:1px solid var(--stroke);border-radius:28px;
+  background:linear-gradient(135deg, rgba(255,255,255,0.82), rgba(255,255,255,0.58));
+  box-shadow:var(--shadow);backdrop-filter:blur(18px);padding:28px;
+}
+.hero::before,.hero::after{content:'';position:absolute;border-radius:999px;pointer-events:none;}
+.hero::before{width:220px;height:220px;right:-70px;top:-90px;background:rgba(143,108,255,0.20);filter:blur(10px);}
+.hero::after{width:180px;height:180px;left:-50px;bottom:-70px;background:rgba(126,199,232,0.18);filter:blur(10px);}
+.hero-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap;position:relative;z-index:1;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-mark{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg, var(--purple) 0%, var(--blue) 100%);box-shadow:0 14px 30px rgba(107,79,214,0.22);}
+.eyebrow{font-size:0.74rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple-deep);font-weight:800;}
+.hero-title-row{display:block;margin-top:4px;}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);line-height:0.94;letter-spacing:-0.05em;max-width:100%;}
+.week-pill{display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;border:1px solid rgba(145,119,210,0.22);background:linear-gradient(135deg, rgba(143,108,255,0.14), rgba(126,199,232,0.12));color:var(--purple-deep);font-size:0.78rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;}
+.week-pill.compact{padding:7px 11px;font-size:0.74rem;}
+.hero-copy{max-width:52ch;margin-top:12px;color:var(--muted);font-size:1rem;line-height:1.7;}
+.panel-row{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px;position:relative;z-index:1;}
+.panel,.module-card,.mini-card{border:1px solid var(--stroke);background:rgba(255,255,255,0.66);backdrop-filter:blur(16px);box-shadow:var(--shadow);border-radius:24px;}
+.panel{padding:18px;}
+.panel-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap;}
+.panel-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.panel-title{font-size:1.02rem;font-weight:800;}
+.panel-kicker{font-size:0.8rem;color:var(--muted);line-height:1.45;}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.metric{border-radius:18px;background:rgba(255,255,255,0.72);border:1px solid rgba(145,119,210,0.18);padding:16px;}
+.metric .k{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);font-weight:800;}
+.metric .v{font-size:1.55rem;font-weight:800;margin-top:8px;color:var(--purple-deep);}
+.metric .d{font-size:0.84rem;line-height:1.45;margin-top:4px;color:var(--muted);}
+.metric-bar{margin-top:12px;height:10px;border-radius:999px;background:rgba(23,49,61,0.08);overflow:hidden;}
+.metric-bar span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--purple),var(--blue));}
+.clock-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+.clock-card{border-radius:18px;padding:16px;background:linear-gradient(135deg, rgba(143,108,255,0.12), rgba(126,199,232,0.12));border:1px solid rgba(145,119,210,0.18);}
+.clock-big{font-size:clamp(2rem,6vw,3.2rem);font-weight:800;letter-spacing:-0.04em;line-height:1;}
+.clock-small{margin-top:8px;color:var(--muted);font-size:0.92rem;line-height:1.45;}
+.weather-card{display:flex;flex-direction:column;justify-content:space-between;gap:10px;}
+.weather-pill{display:inline-flex;align-self:flex-start;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.72);border:1px solid rgba(145,119,210,0.18);font-size:0.75rem;font-weight:800;color:var(--purple-deep);text-transform:uppercase;letter-spacing:0.08em;}
+.weather-main{font-size:1.1rem;font-weight:800;line-height:1.3;}
+.weather-sub{font-size:0.84rem;color:var(--muted);line-height:1.45;}
+.ghost-btn{appearance:none;border:none;background:linear-gradient(135deg, var(--purple), var(--blue-deep));color:white;font-weight:800;border-radius:14px;padding:11px 14px;cursor:pointer;box-shadow:0 14px 24px rgba(107,79,214,0.22);}
+.ghost-btn:hover{filter:brightness(1.03);}
+.modules{margin-top:18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;position:relative;z-index:1;}
+.module-card{padding:18px;display:flex;flex-direction:column;gap:14px;min-height:260px;transition:transform .18s ease, box-shadow .18s ease;}
+.module-card:hover{transform:translateY(-2px);box-shadow:0 28px 90px rgba(22,48,57,0.16);}
+.module-icon{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg, rgba(143,108,255,0.34), rgba(126,199,232,0.30));border:1px solid rgba(145,119,210,0.2);font-size:1.35rem;}
+.module-card h2{font-size:1.18rem;letter-spacing:-0.03em;}
+.module-card p{color:var(--muted);font-size:0.92rem;line-height:1.55;}
+.module-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.tag{font-size:0.72rem;font-weight:800;color:var(--purple-deep);background:rgba(143,108,255,0.12);border:1px solid rgba(143,108,255,0.16);padding:6px 10px;border-radius:999px;}
+.module-actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap;}
+.module-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border-radius:14px;text-decoration:none;font-weight:800;color:var(--text);background:rgba(255,255,255,0.72);border:1px solid rgba(145,119,210,0.2);}
+.module-link.primary{background:linear-gradient(135deg, var(--purple), var(--blue));color:white;border-color:transparent;}
+.footer-note{margin-top:18px;color:var(--muted);font-size:0.82rem;line-height:1.6;}
+@media (max-width: 980px){.panel-row,.modules,.clock-grid,.metrics,.status-grid{grid-template-columns:1fr;}.hero{padding:20px;}}
+@media (max-width: 720px){
+  .shell{padding:12px 10px 24px;}
+  .hero{padding:16px;border-radius:24px;}
+  .hero-top{gap:14px;}
+  .brand{align-items:flex-start;gap:10px;}
+  .brand-mark{width:42px;height:42px;border-radius:14px;flex:0 0 42px;}
+  .eyebrow{font-size:0.68rem;letter-spacing:0.12em;}
+  .hero-title-row{grid-template-columns:1fr;align-items:start;gap:8px;margin-top:2px;}
+  .hero h1{max-width:none;font-size:clamp(2rem,12vw,3rem);line-height:0.96;}
+  .hero-copy{font-size:0.95rem;line-height:1.55;max-width:none;}
+  .week-pill.compact{justify-self:start;}
+  .panel,.module-card,.mini-card{border-radius:20px;}
+  .panel{padding:14px;}
+  .panel-head{align-items:flex-start;}
+  .panel-actions{width:100%;justify-content:space-between;}
+  .week-pill.compact{padding:7px 10px;}
+  .ghost-btn{width:100%;padding:10px 12px;border-radius:12px;}
+  .metrics{gap:10px;}
+  .metric{padding:14px;}
+  .metric .v{font-size:1.35rem;}
+  .clock-grid{gap:10px;}
+  .clock-card{padding:14px;}
+  .clock-big{font-size:clamp(1.8rem,11vw,2.6rem);}
+  .weather-main{font-size:1rem;}
+  .modules{gap:12px;margin-top:14px;}
+  .module-card{min-height:auto;padding:14px;gap:12px;}
+  .module-icon{width:46px;height:46px;border-radius:16px;font-size:1.2rem;}
+  .module-card h2{font-size:1.06rem;}
+  .module-card p{font-size:0.88rem;line-height:1.45;}
+  .module-tags{gap:6px;}
+  .tag{padding:5px 8px;font-size:0.68rem;}
+  .module-actions{margin-top:2px;}
+  .module-link{width:100%;padding:10px 12px;border-radius:12px;}
+  .footer-note{font-size:0.78rem;line-height:1.5;margin-top:14px;}
+  .status-grid{min-width:0;}
+}
+@media (max-width: 430px){
+  .hero h1{font-size:clamp(1.9rem,11vw,2.7rem);}
+  .panel-title{font-size:0.98rem;}
+  .panel-kicker{font-size:0.76rem;}
+  .metric .k,.status-label{font-size:0.64rem;}
+  .metric .d,.status-sub,.weather-sub,.clock-small{font-size:0.78rem;}
+  .week-pill,.week-pill.compact{font-size:0.7rem;letter-spacing:0.06em;}
+}
 </style>
 </head>
 <body>
-<header>
-  <h1>Mi Rutina de Gym</h1>
-  <p>3 dias · Recomposicion · Adaptada a anteversion femoral</p>
-</header>
-<div class="tabs">
-  <div class="tab active" onclick="switchTab('semana')">Semana</div>
-  <div class="tab" onclick="switchTab('lunes')">Lunes</div>
-  <div class="tab" onclick="switchTab('miercoles')">Miercoles</div>
-  <div class="tab" onclick="switchTab('viernes')">Viernes</div>
-  <div class="tab" onclick="switchTab('progresion')">Progresion</div>
-  <div class="tab" onclick="switchTab('resumen')">Resumen</div>
-</div>
-
-<div id="tab-semana" class="tab-content active">
-  <div class="week-grid">
-    <div class="day-pill pill-inf" style="cursor:pointer" onclick="switchTab('lunes')"><div class="pname">Lunes</div><div class="ptype">Inferior A</div></div>
-    <div class="day-pill pill-des"><div class="pname">Martes</div><div class="ptype">Descanso</div></div>
-    <div class="day-pill pill-sup" style="cursor:pointer" onclick="switchTab('miercoles')"><div class="pname">Miercoles</div><div class="ptype">Superior</div></div>
-    <div class="day-pill pill-des"><div class="pname">Jueves</div><div class="ptype">Descanso</div></div>
-    <div class="day-pill pill-inf" style="cursor:pointer" onclick="switchTab('viernes')"><div class="pname">Viernes</div><div class="ptype">Inferior B</div></div>
-    <div class="day-pill pill-des"><div class="pname">Sab/Dom</div><div class="ptype">Descanso</div></div>
-  </div>
-  <div class="legend">
-    <span class="leg"><span class="leg-dot" style="background:var(--rosa-borde)"></span>Tren inferior</span>
-    <span class="leg"><span class="leg-dot" style="background:var(--azul-borde)"></span>Tren superior</span>
-    <span class="leg"><span class="leg-dot" style="background:#bbb"></span>Descanso</span>
-  </div>
-  <div class="info-box danger">
-    <strong>Contraindicado por anteversion femoral</strong>
-    <div class="info-grid">
-      <div class="info-item">Sumo deadlift</div><div class="info-item">Sentadilla punta abierta</div>
-      <div class="info-item">Estiramientos rotacion externa</div><div class="info-item">Abduccion con cadera extendida</div>
-      <div class="info-item">Sentadilla sumo / pliee</div><div class="info-item">Pie trasero girado en split squat</div>
-    </div>
-  </div>
-  <div class="info-box accent">
-    <strong>Calentamiento 10 min - siempre antes de entrenar</strong>
-    <div class="info-grid">
-      <div class="info-item">Ankle CARs - 10 c/lado</div><div class="info-item">Wall dorsiflexion stretch - 40 seg c/lado</div>
-      <div class="info-item">90/90 hip stretch - 45 seg c/lado</div><div class="info-item">Hip CARs - 8 c/lado</div>
-      <div class="info-item">Glute bridge isometrico - 30 seg x2</div><div class="info-item">Band lateral walk - 15 pasos c/lado</div>
-    </div>
-  </div>
-  <div class="info-box pro">
-    <strong>Protocolo dorsiflexion - 5 min - todos los dias</strong>
-    <div class="info-grid">
-      <div class="info-item">Wall ankle stretch - 3 x 45 seg c/lado</div><div class="info-item">Banded ankle mobilization</div>
-      <div class="info-item">Calf raise excentrico - 3 x 15, bajada 4 seg</div><div class="info-item">Resultados en 4-6 semanas</div>
-    </div>
-  </div>
-</div>
-
-<div id="tab-lunes" class="tab-content">
-  <div class="progress-bar-container">
-    <div class="progress-label"><span>Progreso del dia</span><span id="lun-prog-text">0 / 0 ejercicios</span></div>
-    <div class="progress-bar"><div class="progress-fill" id="lun-prog-fill" style="width:0%"></div></div>
-  </div>
-  <div id="lun-container"></div>
-</div>
-<div id="tab-miercoles" class="tab-content">
-  <div class="progress-bar-container">
-    <div class="progress-label"><span>Progreso del dia</span><span id="mie-prog-text">0 / 0 ejercicios</span></div>
-    <div class="progress-bar"><div class="progress-fill" id="mie-prog-fill" style="width:0%"></div></div>
-  </div>
-  <div id="mie-container"></div>
-</div>
-<div id="tab-viernes" class="tab-content">
-  <div class="progress-bar-container">
-    <div class="progress-label"><span>Progreso del dia</span><span id="vie-prog-text">0 / 0 ejercicios</span></div>
-    <div class="progress-bar"><div class="progress-fill" id="vie-prog-fill" style="width:0%"></div></div>
-  </div>
-  <div id="vie-container"></div>
-</div>
-
-<div id="tab-progresion" class="tab-content">
-  <div class="prog-filters">
-    <button class="pf-btn act-all" onclick="setFilter('all',this)">Todos</button>
-    <button class="pf-btn" onclick="setFilter('inf',this)">Inferior</button>
-    <button class="pf-btn" onclick="setFilter('sup',this)">Superior</button>
-    <button class="pf-btn" onclick="setFilter('core',this)">Core</button>
-  </div>
-  <div id="prog-container"></div>
-</div>
-
-<div id="tab-resumen" class="tab-content">
-  <div class="summary-card">
-    <h3>Estructura del programa</h3>
-    <div class="stat-row"><span>Frecuencia</span><span class="val">3 dias / semana</span></div>
-    <div class="stat-row"><span>Lunes</span><span class="val">Inferior A - posterior chain</span></div>
-    <div class="stat-row"><span>Miercoles</span><span class="val">Superior completo</span></div>
-    <div class="stat-row"><span>Viernes</span><span class="val">Inferior B - anterior chain</span></div>
-    <div class="stat-row"><span>Duracion por sesion</span><span class="val">65-75 min</span></div>
-  </div>
-  <div class="summary-card">
-    <h3>Adaptaciones por anatomia</h3>
-    <div class="stat-row"><span>Anteversion femoral</span><span class="val danger">Stance neutro siempre</span></div>
-    <div class="stat-row"><span>Dorsiflexion limitada</span><span class="val">Talones elevados en hack squat / Smith</span></div>
-    <div class="stat-row"><span>Abduccion</span><span class="val">Solo con cadera a 60 de flexion</span></div>
-    <div class="stat-row"><span>Split squat</span><span class="val danger">Pie trasero neutro siempre</span></div>
-    <div class="stat-row"><span>Sumo deadlift</span><span class="val danger">Contraindicado</span></div>
-  </div>
-  <div class="summary-card">
-    <h3>Protocolo de progresion (8 semanas)</h3>
-    <div class="stat-row"><span>Semanas 1-4</span><span class="val">Construi el peso base. Tecnica primero.</span></div>
-    <div class="stat-row"><span>Semanas 5-8</span><span class="val">Anadi pausa de 1 seg en hip thrust y RDL.</span></div>
-    <div class="stat-row"><span>Regla de oro</span><span class="val">Subi peso solo con tecnica limpia en todas las series.</span></div>
-  </div>
-  <div class="note-box">
-    <strong>Recorda</strong>
-    Registra los pesos en cada sesion. La pestana Progresion muestra tu historial de las ultimas 6 semanas por ejercicio. Calentamiento 10 min obligatorio antes de entrenar. Protocolo de tobillo todos los dias, incluso sin ir al gym.
-  </div>
-</div>
-
-<script>
-const RD = {
-  lun:{title:'Lunes - Inferior A',subtitle:'Posterior chain · 17:15-18:30 · ~70 min',type:'inf',
-    muscles:['Gluteo mayor','Isquiotibiales','Gluteo medio','Core anti-extension'],
-    blocks:[
-      {label:'Bloque 1 - Hip hinge (el nucleo del dia)',exercises:[
-        {id:'lun-1',name:'Hip thrust con barra',note:'Pies a ancho de cadera, punta neutra. Excentrico 2 seg. Sem 1-4: construi el peso. Sem 5-8: pausa en el tope.',sets:'5 x 6-8',n:5,cls:'inf',main:true},
-        {id:'lun-2',name:'Romanian deadlift (RDL) bilateral',note:'Hip hinge estricto: empuje de cadera atras, espalda neutral. Par ideal con el hip thrust.',sets:'4 x 8-10',n:4,cls:'inf',main:true},
-      ]},
-      {label:'Bloque 2 - Aislamiento y volumen',exercises:[
-        {id:'lun-3',name:'Leg curl tumbado',note:'Isquios en flexion de rodilla. Bajada en 3 seg.',sets:'4 x 10-12',n:4,cls:'inf'},
-        {id:'lun-4',name:'Abduccion en maquina sentada - cadera 60',note:'Siempre con cadera flexionada a 60 grados. Nunca con pierna extendida.',sets:'4 x 15-20',n:4,cls:'inf'},
-        {id:'lun-5',name:'Hip thrust unilateral (single leg)',note:'Mayor activacion de gluteo por lado. Progresion clave para anteversion femoral.',sets:'3 x 10 c/lado',n:3,cls:'inf'},
-      ]},
-      {label:'Bloque 3 - Core',exercises:[
-        {id:'lun-6',name:'Dead bug',note:'Anti-extension. Alta prioridad en anteversion femoral.',sets:'3 x 8 c/lado',n:3,cls:'core'},
-        {id:'lun-7',name:'Plancha frontal',note:'Cierre del dia. Controla que la cadera no suba.',sets:'3 x 35 seg',n:3,cls:'core'},
-      ]}
-    ],
-    tip:'Lunes es el dia mas importante. Hip thrust + RDL cubren ambos rangos del gluteo. Prioriza tecnica limpia sobre peso.'
-  },
-  mie:{title:'Miercoles - Superior',subtitle:'Tren superior completo · 18:15-19:30 · ~65 min',type:'sup',
-    muscles:['Pecho','Espalda','Hombros','Biceps','Triceps','Core anti-rotacion'],
-    blocks:[
-      {label:'Bloque 1 - Empuje horizontal y vertical',exercises:[
-        {id:'mie-1',name:'Press de banca con mancuernas',note:'Principal de empuje. Excentrico 2-3 seg. Escapulas retraidas.',sets:'4 x 8-10',n:4,cls:'sup',main:true},
-        {id:'mie-2',name:'Press militar con mancuernas sentada',note:'Hombros. Clave para la figura. No arquees la espalda baja.',sets:'3 x 10-12',n:3,cls:'sup'},
-      ]},
-      {label:'Bloque 2 - Jale horizontal y vertical',exercises:[
-        {id:'mie-3',name:'Jalon al pecho (lat pulldown)',note:'Principal de jale. Agarre pronado, algo mas ancho que hombros.',sets:'4 x 8-10',n:4,cls:'sup',main:true},
-        {id:'mie-4',name:'Remo con mancuerna a una mano',note:'Espalda media. Columna neutral, no rotes el torso.',sets:'3 x 10 c/lado',n:3,cls:'sup'},
-        {id:'mie-5',name:'Face pull en polea',note:'Manguito rotador y deltoides posterior. No saltear.',sets:'3 x 15-20',n:3,cls:'sup'},
-      ]},
-      {label:'Bloque 3 - Aislamiento + core',exercises:[
-        {id:'mie-6',name:'Elevaciones laterales',note:'Deltoides lateral. Excentrico lento, 3 seg bajando.',sets:'3 x 15-18',n:3,cls:'sup'},
-        {id:'mie-7',name:'Curl de biceps alternado',note:'Supinacion completa en el tope.',sets:'3 x 12',n:3,cls:'sup'},
-        {id:'mie-8',name:'Half-kneeling chop en polea',note:'Anti-rotacion + control flexion de cadera. Recomendado para anteversion femoral (Cressey).',sets:'3 x 10 c/lado',n:3,cls:'core'},
-      ]}
-    ],
-    tip:'El miercoles es tu unico dia de tren superior: empuje horizontal, empuje vertical, jale horizontal, jale vertical. No saltes ninguno.'
-  },
-  vie:{title:'Viernes - Inferior B',subtitle:'Anterior chain + unilateral · 17:15-18:30 · ~70 min',type:'inf',
-    muscles:['Cuadriceps','Gluteo','Aductores','Core lateral y anti-rotacion'],
-    blocks:[
-      {label:'Bloque 1 - Sentadilla guiada (tobillo y cadera adaptados)',exercises:[
-        {id:'vie-1',name:'Hack squat en maquina',note:'Principal del dia. Stance neutro, nunca abrir la punta. Talones en cuna si el tobillo lo pide.',sets:'5 x 6-8',n:5,cls:'inf',main:true,warn:'Stance neutro obligatorio'},
-        {id:'vie-2',name:'Leg press con pies centrados (media altura)',note:'Cuadriceps + gluteos. Baja hasta 90 grados de rodilla.',sets:'4 x 10-12',n:4,cls:'inf'},
-      ]},
-      {label:'Bloque 2 - Unilateral (progresiones para anteversion femoral)',exercises:[
-        {id:'vie-3',name:'Single leg RDL con mancuerna',note:'Introduce estabilidad en plano frontal y transversal. Cadera a la misma altura.',sets:'4 x 10 c/lado',n:4,cls:'inf',main:true},
-        {id:'vie-4',name:'Bulgarian split squat - pie trasero neutro',note:'Pie trasero paralelo al suelo, nunca girado afuera. Bajada controlada.',sets:'3 x 10 c/lado',n:3,cls:'inf',warn:'Pie trasero neutro siempre'},
-      ]},
-      {label:'Bloque 3 - Aislamiento y core',exercises:[
-        {id:'vie-5',name:'Adduccion en maquina',note:'Aductores y cara interna del muslo. Rango completo, sin rebote.',sets:'3 x 15',n:3,cls:'inf'},
-        {id:'vie-6',name:'Hip thrust con mancuerna (peso moderado)',note:'Segundo estimulo semanal de gluteos. 70-75% del peso del lunes.',sets:'3 x 15',n:3,cls:'inf'},
-        {id:'vie-7',name:'Plancha lateral',note:'Oblicuos y core lateral. Cadera alineada.',sets:'3 x 30 seg c/lado',n:3,cls:'core'},
-        {id:'vie-8',name:'Pallof press en polea',note:'Anti-rotacion. Cierre del dia. Exhala al empujar.',sets:'3 x 10 c/lado',n:3,cls:'core'},
-      ]}
-    ],
-    tip:'El viernes es mas quad-dominante que el lunes. El single leg RDL y el Bulgarian son progresiones clave para anteversion femoral.'
-  }
-};
-
-let state={}, weights={}, wpOpen={}, viewWeekOffset={};
-
-function load(){
-  try{state=JSON.parse(localStorage.getItem('rg_state')||'{}');}catch(e){state={};}
-  try{weights=JSON.parse(localStorage.getItem('rg_weights')||'{}');}catch(e){weights={};}
-}
-function save(){
-  localStorage.setItem('rg_state',JSON.stringify(state));
-  localStorage.setItem('rg_weights',JSON.stringify(weights));
-}
-
-function getWeekKey(offset){
-  const d=new Date();
-  d.setDate(d.getDate()-(offset||0)*7);
-  const jan1=new Date(d.getFullYear(),0,1);
-  const wk=Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7);
-  return d.getFullYear()+'-W'+String(wk).padStart(2,'0');
-}
-function wkLabel(k){
-  const p=k.split('-W');
-  return 'Sem '+p[1]+'/'+p[0].slice(2);
-}
-
-function getWD(exId,wk){return(weights[exId]&&weights[exId][wk])?weights[exId][wk]:[];}
-function setWD(exId,wk,i,field,val){
-  if(!weights[exId])weights[exId]={};
-  if(!weights[exId][wk])weights[exId][wk]=[];
-  if(!weights[exId][wk][i])weights[exId][wk][i]={kg:'',reps:''};
-  weights[exId][wk][i][field]=val;
-  save();
-  renderProg();
-}
-
-function toggleWP(exId,dk){
-  wpOpen[exId]=!wpOpen[exId];
-  renderDay(dk);
-}
-function changeWeekView(exId,delta,dk){
-  viewWeekOffset[exId]=Math.max(0,(viewWeekOffset[exId]||0)+delta);
-  renderDay(dk);
-}
-
-function buildWeightPanel(ex,dk){
-  const offset=viewWeekOffset[ex.id]||0;
-  const currWk=getWeekKey(offset);
-  const prevWk=getWeekKey(offset+1);
-  const currD=getWD(ex.id,currWk);
-  const prevD=getWD(ex.id,prevWk);
-  const isCurrent=offset===0;
-  const lbl=isCurrent?'Esta semana':wkLabel(currWk);
-  let rows='';
-  for(let i=0;i<ex.n;i++){
-    const c=currD[i]||{kg:'',reps:''};
-    const p=prevD[i]||null;
-    const prevTxt=p&&p.kg?(p.kg+'kg'+(p.reps?' x '+p.reps:'')):'--';
-    const improved=c.kg&&p&&p.kg&&parseFloat(c.kg)>parseFloat(p.kg);
-    const ro=isCurrent?'':'readonly';
-    rows+=`<div class="serie-row">
-      <span class="serie-num">S${i+1}</span>
-      <div class="serie-input-wrap">
-        <span class="serie-input-label">kg</span>
-        <input class="serie-input${improved?' improved':''}" type="number" min="0" step="0.5" value="${c.kg}" placeholder="-" ${ro}
-          onchange="setWD('${ex.id}','${currWk}',${i},'kg',this.value)"/>
-      </div>
-      <div class="serie-input-wrap">
-        <span class="serie-input-label">reps</span>
-        <input class="serie-input" type="number" min="0" step="1" value="${c.reps}" placeholder="-" ${ro}
-          onchange="setWD('${ex.id}','${currWk}',${i},'reps',this.value)"/>
-      </div>
-      <div class="prev-cell"><span class="prev-lbl">ant.</span>${prevTxt}</div>
-    </div>`;
-  }
-  return `<div class="weight-panel">
-    <div class="weight-panel-header">
-      <span class="weight-panel-title">Carga - ${lbl}</span>
-      <div class="week-nav-row">
-        <button class="wnav" onclick="changeWeekView('${ex.id}',1,'${dk}')">&#8249;</button>
-        <span>${isCurrent?'Actual':wkLabel(currWk)}</span>
-        <button class="wnav" onclick="changeWeekView('${ex.id}',-1,'${dk}')" ${isCurrent?'disabled':''}>&#8250;</button>
-      </div>
-    </div>
-    <div class="series-grid">${rows}</div>
-    ${!isCurrent?'<div class="history-note">Semana pasada - solo lectura</div>':''}
-  </div>`;
-}
-
-function renderDay(dk){
-  const d=RD[dk];
-  const cont=document.getElementById(dk+'-container');
-  if(!cont)return;
-  const allEx=d.blocks.flatMap(b=>b.exercises);
-  const checked=allEx.filter(e=>state[e.id]).length;
-  const total=allEx.length;
-  const pct=total?Math.round(checked/total*100):0;
-  const hcls=d.type==='inf'?'inf':'sup';
-  const mtags=d.muscles.map(m=>`<span class="muscle-tag">${m}</span>`).join('');
-  let bhtml=d.blocks.map(bl=>{
-    const ehtml=bl.exercises.map(ex=>{
-      const ck=state[ex.id];
-      const mc=ex.main?(d.type==='inf'?' main-inf':' main-sup'):'';
-      const mt=ex.main?`<span class="principal-tag ${d.type==='inf'?'ptag-inf':'ptag-sup'}">principal</span>`:'';
-      const sc=ex.cls==='inf'?'sets-inf':ex.cls==='sup'?'sets-sup':'sets-core';
-      const currD=getWD(ex.id,getWeekKey(0));
-      const hasData=currD.some(s=>s&&s.kg);
-      const isOpen=wpOpen[ex.id];
-      const btnTxt=isOpen?'Ocultar':(hasData?'Pesos registrados':'Registrar pesos');
-      return `<div class="ex-item${mc}${ck?' checked':''}">
-        <div class="ex-top" onclick="toggleCheck('${ex.id}','${dk}')">
-          <input type="checkbox" ${ck?'checked':''} onclick="event.stopPropagation();toggleCheck('${ex.id}','${dk}')"/>
-          <div class="ex-content">
-            <div class="ex-name">${ex.name}${mt}</div>
-            <div class="ex-note">${ex.note}</div>
-            ${ex.warn?`<span class="ex-warn">Atencion: ${ex.warn}</span>`:''}
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="brand">
+            <div class="brand-mark" aria-hidden="true"></div>
+            <div>
+              <div class="eyebrow">Lifestyle assistant</div>
+              <div class="hero-copy" id="hero-subtitle">Carga el estado de tu día, métricas y accesos rápidos.</div>
+            </div>
           </div>
-          <div class="ex-right">
-            <span class="ex-sets ${sc}">${ex.sets}</span>
-            <button class="weight-toggle${hasData?' has-data':''}" onclick="event.stopPropagation();toggleWP('${ex.id}','${dk}')">${btnTxt}</button>
+          <div class="hero-title-row">
+            <h1 id="greeting">Hola</h1>
+          </div>
+          <p class="hero-copy" id="hero-line">Tu dashboard para revisar horario, nutrición y rutina en segundos.</p>
+        </div>
+      </div>
+      <div class="panel-row">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Métricas guardadas</div>
+              <div class="panel-kicker">Progreso acumulado en tus tres trackers.</div>
+            </div>
+            <div class="panel-actions">
+              <div class="week-pill compact" id="weekInline">Semana B</div>
+              <button class="ghost-btn" type="button" onclick="refreshAll()">Actualizar clima</button>
+            </div>
+          </div>
+          <div class="metrics">
+            <div class="metric">
+              <div class="k">Horario</div>
+              <div class="v" id="scheduleMetric">0</div>
+              <div class="d">Bloques marcados en tu horario.</div>
+              <div class="metric-bar"><span id="scheduleBar" style="width:0%"></span></div>
+            </div>
+            <div class="metric">
+              <div class="k">Nutrición</div>
+              <div class="v" id="nutritionMetric">0</div>
+              <div class="d">Comidas / compras marcadas.</div>
+              <div class="metric-bar"><span id="nutritionBar" style="width:0%"></span></div>
+            </div>
+            <div class="metric">
+              <div class="k">Rutina</div>
+              <div class="v" id="routineMetric">0</div>
+              <div class="d">Ejercicios completados o registrados.</div>
+              <div class="metric-bar"><span id="routineBar" style="width:0%"></span></div>
+            </div>
+          </div>
+          <div class="clock-grid">
+            <div class="clock-card">
+              <div class="weather-pill">Clima</div>
+              <div class="weather-main" id="weatherMain">Buscando tu ubicación y clima...</div>
+              <div class="weather-sub" id="weatherSub">Si no aceptas la detección, la página mostrará hora y fecha igual.</div>
+            </div>
+            <div class="clock-card weather-card">
+              <div>
+                <div class="weather-pill">Tu día</div>
+                <div class="clock-big" id="clockBig">--:--</div>
+                <div class="clock-small" id="clockSmall">--</div>
+              </div>
+              <div class="weather-sub" id="clockHint">Entra a nutrición, rutina o horario desde las tarjetas de abajo.</div>
+            </div>
           </div>
         </div>
-        ${isOpen?buildWeightPanel(ex,dk):''}
-      </div>`;
-    }).join('');
-    return `<div class="block-section"><div class="block-label">${bl.label}</div>${ehtml}</div>`;
-  }).join('');
-  cont.innerHTML=`<div class="day-card">
-    <div class="day-header ${hcls}"><div><h2>${d.title}</h2><div class="day-meta">${d.subtitle}</div></div></div>
-    <div class="day-body">
-      <div class="muscle-row">${mtags}</div>
-      ${bhtml}
-      <div class="tip-box">${d.tip}</div>
-      <button class="reset-btn" onclick="resetDay('${dk}')">Reiniciar checks del dia</button>
-    </div>
-  </div>`;
-  document.getElementById(dk+'-prog-text').textContent=`${checked} / ${total} ejercicios`;
-  document.getElementById(dk+'-prog-fill').style.width=pct+'%';
-}
-
-function toggleCheck(id,dk){state[id]=!state[id];save();renderDay(dk);}
-function resetDay(dk){RD[dk].blocks.flatMap(b=>b.exercises).forEach(e=>{delete state[e.id];});save();renderDay(dk);}
-
-let progFilter='all';
-function setFilter(f,btn){
-  progFilter=f;
-  document.querySelectorAll('.pf-btn').forEach(b=>b.classList.remove('act-all','act-inf','act-sup','act-core'));
-  btn.classList.add('act-'+f);
-  renderProg();
-}
-
-function getHistory(exId){
-  if(!weights[exId])return[];
-  return Object.keys(weights[exId]).sort().map(k=>{
-    const data=weights[exId][k];
-    const valid=data.filter(s=>s&&s.kg);
-    if(!valid.length)return null;
-    const maxKg=Math.max(...valid.map(s=>parseFloat(s.kg)||0));
-    const repsArr=valid.filter(s=>s.reps);
-    const avgReps=repsArr.length?Math.round(repsArr.reduce((a,s)=>a+(parseInt(s.reps)||0),0)/repsArr.length):null;
-    return{weekKey:k,maxKg,avgReps};
-  }).filter(Boolean);
-}
-
-function renderProg(){
-  const cont=document.getElementById('prog-container');
-  if(!cont)return;
-  const allEx=[];
-  ['lun','mie','vie'].forEach(dk=>{
-    RD[dk].blocks.flatMap(b=>b.exercises).forEach(ex=>allEx.push({...ex,dayShort:RD[dk].title.split('-')[0].trim()}));
-  });
-  const filtered=allEx.filter(ex=>progFilter==='all'||ex.cls===progFilter);
-  if(!filtered.length){cont.innerHTML='<div class="prog-empty">No hay ejercicios en este filtro.</div>';return;}
-  const weeks=[];
-  for(let i=5;i>=0;i--)weeks.push(getWeekKey(i));
-  cont.innerHTML='';
-  filtered.forEach(ex=>{
-    const hist=getHistory(ex.id);
-    const sc=ex.cls==='inf'?'sets-inf':ex.cls==='sup'?'sets-sup':'sets-core';
-    const wksHtml=weeks.map(wk=>{
-      const entry=hist.find(h=>h.weekKey===wk);
-      const isCurr=wk===getWeekKey(0);
-      return `<div class="prog-wk${entry?' filled':''}${isCurr?' current':''}">
-        <div class="pw-lbl">${isCurr?'Actual':wkLabel(wk)}</div>
-        <div class="pw-kg">${entry?entry.maxKg+'kg':'--'}</div>
-        <div class="pw-reps">${entry&&entry.avgReps?'~'+entry.avgReps+' rep':''}</div>
-      </div>`;
-    }).join('');
-    const div=document.createElement('div');
-    div.className='prog-card';
-    div.innerHTML=`<div class="prog-card-name">${ex.name}</div>
-      <div class="prog-card-sub">${ex.dayShort} &nbsp;·&nbsp; <span class="ex-sets ${sc}" style="font-size:0.65rem;padding:1px 6px">${ex.sets}</span></div>
-      <div class="prog-weeks-row">${wksHtml}</div>
-      ${!hist.length?'<div class="prog-no-data">Aun no hay pesos registrados.</div>':''}`;
-    cont.appendChild(div);
-  });
-}
-
-function switchTab(tab){
-  const map=['semana','lunes','miercoles','viernes','progresion','resumen'];
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',map[i]===tab));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  if(tab==='progresion')renderProg();
-}
-
-load();
-renderDay('lun');renderDay('mie');renderDay('vie');
-</script>
-
+      </div>
+    </section>
+    <section class="modules">
+      <article class="module-card">
+        <div class="module-icon">🗓️</div>
+        <div><h2>Horario</h2><p>Semana, bloques y continuidad en una vista limpia.</p></div>
+        <div class="module-tags"><span class="tag">Semana A / B</span><span class="tag">Bloques</span><span class="tag">Sueño</span></div>
+        <div class="module-actions"><a class="module-link primary" href="../context/horario_v2.html">Entrar al horario</a></div>
+      </article>
+      <article class="module-card">
+        <div class="module-icon">🥗</div>
+        <div><h2>Nutrición</h2><p>Menú semanal y mercado, sin ruido extra.</p></div>
+        <div class="module-tags"><span class="tag">Menú</span><span class="tag">Mercado</span><span class="tag">Proteína</span></div>
+        <div class="module-actions"><a class="module-link primary" href="../context/plan_nutri.html">Entrar a nutrición</a></div>
+      </article>
+      <article class="module-card">
+        <div class="module-icon">🏋️</div>
+        <div><h2>Rutina</h2><p>Progreso, cargas y sesiones, todo directo.</p></div>
+        <div class="module-tags"><span class="tag">Progreso</span><span class="tag">Cargas</span><span class="tag">Sesiones</span></div>
+        <div class="module-actions"><a class="module-link primary" href="../context/rutina.html">Entrar a rutina</a></div>
+      </article>
+    </section>
+    <p class="footer-note">La portada funciona como panel de control. Si quieres, después también le doy una capa visual coherente a las tres páginas internas para que todo el sistema se vea unificado.</p>
+  </main>
 <script>
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('sw.js').catch(()=>{});
+const STORAGE_KEYS = { schedule:'horario_v2_state', nutrition:'nutriplan_state', routine:'rg_state' };
+function safeParse(key){ try{return JSON.parse(localStorage.getItem(key)||'{}');}catch(e){return{};} }
+function countTruthies(obj){ return Object.values(obj||{}).filter(Boolean).length; }
+function setMetric(id, count, max){ const value=document.getElementById(id); const bar=document.getElementById(id.replace('Metric','Bar')); if(value) value.textContent=String(count); if(bar) bar.style.width=max?`${Math.min(100,Math.round((count/max)*100))}%`:'0%'; }
+function getGreeting(hour){ if(hour<6)return'Buenas noches'; if(hour<12)return'Buenos días'; if(hour<19)return'Buenas tardes'; return'Buenas noches'; }
+function weatherCodeToText(code){ const map={0:'cielo despejado',1:'principalmente despejado',2:'parcialmente nublado',3:'nublado',45:'niebla suave',48:'niebla',51:'llovizna ligera',61:'lluvia ligera',63:'lluvia moderada',65:'lluvia fuerte',71:'nieve ligera',80:'chubascos',95:'tormenta'}; return map[code]||'clima variable'; }
+function startOfDay(date) { return new Date(date.getFullYear(), date.getMonth(), date.getDate()); }
+function dayCodeFromDate(date = new Date()) {
+  return ['dom','lun','mar','mie','jue','vie','sab'][date.getDay()];
+}
+function weekCodeFromDate(date = new Date()) {
+  const anchor = startOfDay(new Date(2026, 6, 23));
+  const diffDays = Math.floor((startOfDay(date) - anchor) / 86400000);
+  const weekOffset = Math.abs(Math.floor(diffDays / 7)) % 2;
+  return weekOffset === 0 ? 'b' : 'a';
+}
+function updateModuleLinks() {
+  const day = dayCodeFromDate();
+  const week = weekCodeFromDate();
+  document.querySelectorAll('a[href="../context/horario_v2.html"]').forEach(link => {
+    link.href = `../context/horario_v2.html?day=${day}&week=${week}`;
+  });
+  document.querySelectorAll('a[href="../context/plan_nutri.html"]').forEach(link => {
+    link.href = `../context/plan_nutri.html?day=${day}&week=${week}`;
   });
 }
-</script>
-
-<div id="install-banner" style="display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#2e7d5e;color:white;border-radius:12px;padding:12px 20px;font-family:'Segoe UI',sans-serif;font-size:0.85rem;box-shadow:0 4px 16px rgba(0,0,0,0.25);z-index:9999;display:none;align-items:center;gap:12px;max-width:320px;width:90%;">
-  <span>Instala la app en tu celular</span>
-  <button id="install-btn" style="background:white;color:#2e7d5e;border:none;border-radius:8px;padding:6px 14px;font-weight:700;cursor:pointer;font-size:0.82rem;">Instalar</button>
-  <button onclick="document.getElementById('install-banner').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:1.1rem;padding:0 4px;">&#10005;</button>
-</div>
-<script>
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault();
-  deferredPrompt=e;
-  const banner=document.getElementById('install-banner');
-  banner.style.display='flex';
-  document.getElementById('install-btn').addEventListener('click',()=>{
-    banner.style.display='none';
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(()=>{deferredPrompt=null;});
-  });
-});
-window.addEventListener('appinstalled',()=>{
-  document.getElementById('install-banner').style.display='none';
-});
+function updateWeekUi() {
+  const week = weekCodeFromDate();
+  const weekValueEl = document.getElementById('weekValue');
+  const weekSubEl = document.getElementById('weekSub');
+  const weekInlineEl = document.getElementById('weekInline');
+  if (weekValueEl) weekValueEl.textContent = `Semana ${week.toUpperCase()}`;
+  if (weekSubEl) weekSubEl.textContent = week === 'b' ? 'Esta semana' : 'La próxima semana';
+  if (weekInlineEl) weekInlineEl.textContent = `Semana ${week.toUpperCase()}`;
+  updateModuleLinks();
+}
+function updateClock(){ const now=new Date(); const time=new Intl.DateTimeFormat('es-ES',{hour:'2-digit',minute:'2-digit'}).format(now); const date=new Intl.DateTimeFormat('es-ES',{day:'2-digit',month:'long',year:'numeric'}).format(now); const weekday=new Intl.DateTimeFormat('es-ES',{weekday:'long'}).format(now); const hour=now.getHours(); const greeting=document.getElementById('greeting'); const clockBig=document.getElementById('clockBig'); const clockSmall=document.getElementById('clockSmall'); const heroSubtitle=document.getElementById('hero-subtitle'); const heroLine=document.getElementById('hero-line'); if(greeting) greeting.textContent=`${getGreeting(hour)}, Juli`; if(clockBig) clockBig.textContent=time; if(clockSmall) clockSmall.textContent=`${weekday} · ${date}`; if(heroSubtitle) heroSubtitle.textContent=`${weekday.charAt(0).toUpperCase()+weekday.slice(1)} · ${date}`; if(heroLine) heroLine.textContent='Tu tablero de hoy, con acceso directo a horario, nutrición y rutina.'; updateWeekUi(); }
+async function refreshWeather(){ const main=document.getElementById('weatherMain'); const sub=document.getElementById('weatherSub'); if(!main||!sub) return; main.textContent='Cargando clima...'; try{ const geo=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?localityLanguage=es').then(r=>r.json()); const latitude=geo.latitude; const longitude=geo.longitude; const city=geo.city||geo.locality||geo.principalSubdivision||'tu zona'; const weather=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&timezone=auto`).then(r=>r.json()); const current=weather.current_weather||{}; const temp=typeof current.temperature==='number'?Math.round(current.temperature):null; const wind=typeof current.windspeed==='number'?Math.round(current.windspeed):null; const code=current.weathercode; main.textContent=temp===null?`Clima en ${city}`:`${temp}°C · ${weatherCodeToText(code)}`; sub.textContent=`${city}${wind!==null?` · viento ${wind} km/h`:''}`; }catch(error){ main.textContent='Ubicación o clima no disponible'; sub.textContent='No pasa nada: igual tienes tu hora, fecha y accesos rápidos abajo.'; } }
+function refreshMetrics(){ const scheduleCount=countTruthies(safeParse(STORAGE_KEYS.schedule)); const nutritionCount=countTruthies(safeParse(STORAGE_KEYS.nutrition)); const routineCount=countTruthies(safeParse(STORAGE_KEYS.routine)); setMetric('scheduleMetric', scheduleCount, 60); setMetric('nutritionMetric', nutritionCount, 80); setMetric('routineMetric', routineCount, 30); }
+function refreshAll(){ updateClock(); refreshWeather(); refreshMetrics(); }
+updateModuleLinks();
+refreshAll(); setInterval(updateClock, 1000);
 </script>
 </body>
 </html>

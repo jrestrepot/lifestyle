@@ -1,10 +1,10 @@
-# Mi Rutina de Gym - PWA
+# Mi Lifestyle
 
-Rutina de gym personalizada: 3 dias, recomposicion corporal, adaptada a anteversion femoral.
+Panel personal de horario, nutricion y rutina para publicar en GitHub Pages.
 
 ## Archivos
 
-- `rutina.html` - la app principal
+- `index.html` - la app principal
 - `manifest.json` - configuracion PWA
 - `sw.js` - service worker (funciona sin internet)
 - `icon-192.png` / `icon-512.png` - iconos de la app

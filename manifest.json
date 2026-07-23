@@ -1,11 +1,11 @@
 {
-  "name": "Mi Rutina de Gym",
-  "short_name": "Mi Gym",
-  "description": "Rutina 3 dias - Recomposicion corporal",
-  "start_url": "./rutina.html",
+  "name": "Mi Lifestyle",
+  "short_name": "Lifestyle",
+  "description": "Horario, nutricion y rutina en una sola pagina",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f0f4f2",
-  "theme_color": "#2e7d5e",
+  "background_color": "#eff9fb",
+  "theme_color": "#8fd9d3",
   "orientation": "portrait-primary",
   "icons": [
     {
