@@ -212,24 +212,23 @@ body{
     <section class="modules">
       <article class="module-card">
         <div class="module-icon">🗓️</div>
-        <div><h2>Horario</h2><p>Semana, bloques y continuidad en una vista limpia.</p></div>
+        <div><h2>Horario</h2><p>Semana, bloques y continuidad.</p></div>
         <div class="module-tags"><span class="tag">Semana A / B</span><span class="tag">Bloques</span><span class="tag">Sueño</span></div>
-        <div class="module-actions"><a class="module-link primary" href="../context/horario_v2.html">Entrar al horario</a></div>
+        <div class="module-actions"><a class="module-link primary" href="context/horario_v2.html">Entrar al horario</a></div>
       </article>
       <article class="module-card">
         <div class="module-icon">🥗</div>
-        <div><h2>Nutrición</h2><p>Menú semanal y mercado, sin ruido extra.</p></div>
+        <div><h2>Nutrición</h2><p>Menú semanal y mercado extra.</p></div>
         <div class="module-tags"><span class="tag">Menú</span><span class="tag">Mercado</span><span class="tag">Proteína</span></div>
-        <div class="module-actions"><a class="module-link primary" href="../context/plan_nutri.html">Entrar a nutrición</a></div>
+        <div class="module-actions"><a class="module-link primary" href="context/plan_nutri.html">Entrar a nutrición</a></div>
       </article>
       <article class="module-card">
         <div class="module-icon">🏋️</div>
-        <div><h2>Rutina</h2><p>Progreso, cargas y sesiones, todo directo.</p></div>
+        <div><h2>Rutina</h2><p>Progreso, cargas y sesiones.</p></div>
         <div class="module-tags"><span class="tag">Progreso</span><span class="tag">Cargas</span><span class="tag">Sesiones</span></div>
-        <div class="module-actions"><a class="module-link primary" href="../context/rutina.html">Entrar a rutina</a></div>
+        <div class="module-actions"><a class="module-link primary" href="context/rutina.html">Entrar a rutina</a></div>
       </article>
     </section>
-    <p class="footer-note">La portada funciona como panel de control. Si quieres, después también le doy una capa visual coherente a las tres páginas internas para que todo el sistema se vea unificado.</p>
   </main>
 <script>
 const STORAGE_KEYS = { schedule:'horario_v2_state', nutrition:'nutriplan_state', routine:'rg_state' };
@@ -251,11 +250,11 @@ function weekCodeFromDate(date = new Date()) {
 function updateModuleLinks() {
   const day = dayCodeFromDate();
   const week = weekCodeFromDate();
-  document.querySelectorAll('a[href="../context/horario_v2.html"]').forEach(link => {
-    link.href = `../context/horario_v2.html?day=${day}&week=${week}`;
+  document.querySelectorAll('a[href="context/horario_v2.html"]').forEach(link => {
+    link.href = `context/horario_v2.html?day=${day}&week=${week}`;
   });
-  document.querySelectorAll('a[href="../context/plan_nutri.html"]').forEach(link => {
-    link.href = `../context/plan_nutri.html?day=${day}&week=${week}`;
+  document.querySelectorAll('a[href="context/plan_nutri.html"]').forEach(link => {
+    link.href = `context/plan_nutri.html?day=${day}&week=${week}`;
   });
 }
 function updateWeekUi() {
