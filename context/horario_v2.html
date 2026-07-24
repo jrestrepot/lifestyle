@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mi Horario Semanal v3</title>
+<title>Mi Horario Semanal</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap');
   :root {
@@ -153,7 +153,7 @@
 <body>
 
 <header>
-  <h1>📅 Mi Horario Semanal (v3)</h1>
+  <h1>📅 Mi Horario Semanal</h1>
   <p>Ajustado: 8h de sueño reales, misma hora de despertar todos los días, agua antes del café</p>
 </header>
 
@@ -171,9 +171,6 @@
   </div>
   <div class="alert-box">
     🚗 <strong>Regla fija:</strong> después de las 6pm nunca camines sola al gym ni de vuelta — andá y volvé en carro. Los bloques de "volver en carro" ya están marcados en Lunes, Miércoles y Viernes.
-  </div>
-  <div class="alert-box" style="background:#e6f1fb; border-left-color:#9cc7e8; color:#0c447c;">
-    😴 <strong>Ajuste de sueño:</strong> te acostás a las 22:30 → despertás a las <strong>6:30 todos los días</strong> (incluyendo findes) para cumplir 8 horas reales. Como el martes ya no implica madrugar más que el resto de la semana, ese día deja de ser un "madrugón" — el cuerpo mantiene el mismo reloj toda la semana.
   </div>
   <div class="progress-bar-container">
     <div class="progress-label">
@@ -226,7 +223,7 @@
     <div class="stat-row"><span>LLA daily</span><span class="val">Lun–Vie 9:30</span></div>
     <div class="stat-row"><span>LLA planning (sem. A)</span><span class="val">Lunes 9:30</span></div>
     <div class="stat-row"><span>LLA proyecto pptx</span><span class="val">Miércoles 10:30</span></div>
-    <div class="stat-row"><span>FCD reunión</span><span class="val">Martes 8:00 (ya no es madrugón: despertás a la misma hora que siempre)</span></div>
+    <div class="stat-row"><span>FCD reunión</span><span class="val">Martes 8:00</span></div>
     <div class="stat-row"><span>Diil reunión</span><span class="val">Miércoles 17:00</span></div>
     <div class="stat-row"><span>LLA horario</span><span class="val">9:30–17:00</span></div>
     <div class="stat-row"><span>FCD proyecto 6 semanas</span><span class="val">11 días totales, ~2/semana, flexible</span></div>
@@ -264,10 +261,6 @@
       <div class="leg"><div class="leg-dot" style="background:#888780"></div>Tiempo libre</div>
     </div>
   </div>
-  <div class="note-box">
-    <strong>💡 Qué cambió respecto a la versión anterior</strong>
-    1) El gym sigue lun/mié/vie de 5:15–6:30pm; la vuelta a casa es siempre en carro, la ida podés hacerla caminando porque todavía es de día. 2) <strong>Despertar fijo a las 6:30 todos los días</strong> (antes eran 10 horas de sueño casi toda la semana, con 8:30 de alarma, y un cambio brusco los martes a las 7:00). Con 22:30 de hora de dormir, 6:30 te da 8 horas exactas y consistentes — la consistencia del horario de sueño importa tanto o más que la duración para la salud metabólica y cardiovascular, así que el martes deja de ser un madrugón especial. 3) La caminata de pasos + audiolibro se movió de la tarde a justo después de despertarte, para aprovechar la luz natural de la mañana (ayuda a regular el reloj circadiano y a dormirte más fácil esa noche). 4) Se agregó explícitamente el vaso de agua al despertar y el café ~90 minutos después, tras el desayuno — ya no queda implícito.
-  </div>
 </div>
 
 <script>
@@ -299,7 +292,7 @@ const weeksData = {
     },
     {
       name: 'Martes', type: '💼 FCD + Diil',
-      tip: 'Misma hora de despertar de siempre (6:30) — la reunión FCD de las 8am ya no requiere madrugar más que otros días.',
+      tip: 'Misma hora de despertar de siempre (6:30).',
       blocks: [
         { id: 'a-mar-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
         { id: 'a-mar-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
@@ -451,7 +444,7 @@ const weeksData = {
     },
     {
       name: 'Martes', type: '💼 FCD + Diil',
-      tip: 'Igual que semana A: misma hora de despertar (6:30), FCD a las 8am ya no es un madrugón, Diil horas en la tarde.',
+      tip: 'Igual que semana A: misma hora de despertar (6:30, Diil horas en la tarde.',
       blocks: [
         { id: 'b-mar-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
         { id: 'b-mar-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
