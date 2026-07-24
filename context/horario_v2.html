@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Mi Horario Semanal v2</title>
+<title>Mi Horario Semanal v3</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap');
   :root {
@@ -153,8 +153,8 @@
 <body>
 
 <header>
-  <h1>📅 Mi Horario Semanal (v2)</h1>
-  <p>Ajustado: sin caminar sola de noche + rutina para madrugar sin sufrir</p>
+  <h1>📅 Mi Horario Semanal (v3)</h1>
+  <p>Ajustado: 8h de sueño reales, misma hora de despertar todos los días, agua antes del café</p>
 </header>
 
 <div class="tabs">
@@ -172,6 +172,9 @@
   <div class="alert-box">
     🚗 <strong>Regla fija:</strong> después de las 6pm nunca camines sola al gym ni de vuelta — andá y volvé en carro. Los bloques de "volver en carro" ya están marcados en Lunes, Miércoles y Viernes.
   </div>
+  <div class="alert-box" style="background:#e6f1fb; border-left-color:#9cc7e8; color:#0c447c;">
+    😴 <strong>Ajuste de sueño:</strong> te acostás a las 22:30 → despertás a las <strong>6:30 todos los días</strong> (incluyendo findes) para cumplir 8 horas reales. Como el martes ya no implica madrugar más que el resto de la semana, ese día deja de ser un "madrugón" — el cuerpo mantiene el mismo reloj toda la semana.
+  </div>
   <div class="progress-bar-container">
     <div class="progress-label">
       <span>Progreso del día</span>
@@ -185,40 +188,33 @@
 <!-- SUEÑO -->
 <div id="tab-sueno" class="tab-content">
   <div class="sleep-card">
-    <div class="sleep-card-header"><h2>🌙 Rutina nocturna estándar</h2></div>
+    <div class="sleep-card-header"><h2>🌙 Rutina nocturna — todos los días, sin excepción</h2></div>
     <div class="sleep-card-body">
       <div class="sleep-row"><span class="sleep-time">21:30</span><span class="sleep-desc">Última pantalla. Modo avión o escala de grises en el celular.</span></div>
       <div class="sleep-row"><span class="sleep-time">21:30–22:00</span><span class="sleep-desc">Lectura física o audiolibro en cama con luz tenue. Nada de series.</span></div>
       <div class="sleep-row"><span class="sleep-time">22:00</span><span class="sleep-desc">Luces apagadas. Temperatura fresca en el cuarto si podés.</span></div>
-      <div class="sleep-row"><span class="sleep-time">22:30</span><span class="sleep-desc">Dormida. Meta: 8 horas de sueño → despertar natural ~6:30.</span></div>
+      <div class="sleep-row"><span class="sleep-time">22:30</span><span class="sleep-desc">Dormida. 22:30 → 6:30 = 8 horas exactas, todos los días de la semana, incluidos sábado y domingo.</span></div>
     </div>
   </div>
   <div class="sleep-card">
-    <div class="sleep-card-header"><h2>🌜 Rutina especial de domingo y lunes en la noche</h2></div>
+    <div class="sleep-card-header"><h2>☀️ Rutina matutina — alarma única a las 6:30</h2></div>
     <div class="sleep-card-body">
-      <div class="sleep-row"><span class="sleep-time">Por qué</span><span class="sleep-desc">El martes tenés reunión de FCD a las 8am — es tu único madrugón fijo de la semana. Adelantá la rutina la noche anterior (domingo y sobre todo lunes) para no sufrirlo.</span></div>
-      <div class="sleep-row"><span class="sleep-time">21:00</span><span class="sleep-desc">Última pantalla — media hora antes que el resto de la semana.</span></div>
-      <div class="sleep-row"><span class="sleep-time">21:00–21:40</span><span class="sleep-desc">Lectura o audiolibro en cama, luz tenue.</span></div>
-      <div class="sleep-row"><span class="sleep-time">21:45</span><span class="sleep-desc">Luces apagadas, a dormir. Con despertar a las 7:00 te da ~9h15 de sueño — margen de sobra aunque cueste conciliar el sueño más temprano.</span></div>
-    </div>
-  </div>
-  <div class="sleep-card">
-    <div class="sleep-card-header"><h2>☀️ Rutina matutina</h2></div>
-    <div class="sleep-card-body">
-      <div class="sleep-row"><span class="sleep-time">7:00</span><span class="sleep-desc">Alarma el martes (único día con hora fija por la reunión de FCD). Sin snooze — teléfono lejos de la cama.</span></div>
-      <div class="sleep-row"><span class="sleep-time">8:30</span><span class="sleep-desc">Alarma el resto de los días. No tenés que madrugar salvo el martes — pero siempre lista para las 9:30.</span></div>
-      <div class="sleep-row"><span class="sleep-time">Al despertar</span><span class="sleep-desc">Abrí las persianas inmediatamente. La luz natural resetea el ritmo circadiano.</span></div>
-      <div class="sleep-row"><span class="sleep-time">Al despertar</span><span class="sleep-desc">Vaso de agua antes del café. El café después de 30–60 min evita el crash de cortisol.</span></div>
+      <div class="sleep-row"><span class="sleep-time">6:30</span><span class="sleep-desc">Alarma, todos los días — incluido el martes de la reunión FCD (8am) y los findes. Sin snooze, teléfono lejos de la cama.</span></div>
+      <div class="sleep-row"><span class="sleep-time">6:30</span><span class="sleep-desc">Vaso de agua apenas te levantás, antes que nada.</span></div>
+      <div class="sleep-row"><span class="sleep-time">6:30</span><span class="sleep-desc">Abrí las persianas o salí al balcón/ventana. Luz natural en la primera hora después de despertar — es la señal más fuerte para tu reloj circadiano.</span></div>
+      <div class="sleep-row"><span class="sleep-time">6:35–7:15</span><span class="sleep-desc">Caminata matutina: pasos + audiolibro, con luz de día. Cumple el hábito de pasos temprano y te deja la tarde/noche libre.</span></div>
+      <div class="sleep-row"><span class="sleep-time">~90 min después</span><span class="sleep-desc">Café, después del desayuno — nunca antes del agua. Esperar 60–90 min desde que te despertás evita el bajón de energía que da tomarlo apenas te levantás.</span></div>
       <div class="sleep-row"><span class="sleep-time">Al despertar</span><span class="sleep-desc">No revisés el celular antes de levantarte de la cama.</span></div>
     </div>
   </div>
   <div class="sleep-card">
-    <div class="sleep-card-header"><h2>💡 Por qué te cuesta levantarte</h2></div>
+    <div class="sleep-card-header"><h2>💡 Por qué este ajuste (y no el anterior)</h2></div>
     <div class="sleep-card-body">
-      <div class="sleep-row"><span class="sleep-time">Consistencia</span><span class="sleep-desc">Acostarse siempre a la misma hora, incluso fines de semana. El cuerpo aprende el patrón.</span></div>
-      <div class="sleep-row"><span class="sleep-time">Un solo madrugón</span><span class="sleep-desc">Concentrar la hora fija de despertar en un solo día (martes) reduce el desgaste acumulado del resto de la semana.</span></div>
-      <div class="sleep-row"><span class="sleep-time">Temperatura</span><span class="sleep-desc">Cuarto fresco + luz natural son los dos estímulos más potentes para salir del sueño profundo.</span></div>
-      <div class="sleep-row"><span class="sleep-time">Evitar</span><span class="sleep-desc">Snooze: fragmenta el sueño y te deja peor. Una sola alarma a una hora realista.</span></div>
+      <div class="sleep-row"><span class="sleep-time">El problema real</span><span class="sleep-desc">Con la versión anterior dormías 22:30→8:30 casi toda la semana: son 10 horas, no 8. Y el martes cambiaba a las 7:00, lo que generaba un desfase distinto cada semana.</span></div>
+      <div class="sleep-row"><span class="sleep-time">Por qué una sola hora de despertar</span><span class="sleep-desc">La investigación sobre sueño muestra que la <em>consistencia</em> del horario (despertarse siempre a la misma hora, también los findes) predice mejor la salud metabólica, cardiovascular y el estado de ánimo que la duración del sueño por sí sola. Cambiar la hora de despertar entre semana y fin de semana ("jet lag social") se asocia con más riesgo cardiovascular, peor ánimo y peor metabolismo — independientemente de cuánto duermas.</span></div>
+      <div class="sleep-row"><span class="sleep-time">Por qué anclar el despertar (no la hora de dormir)</span><span class="sleep-desc">Fijar primero la hora de despertar (y dejar que el cuerpo se acomode a dormirse temprano) es más efectivo que intentar forzar solo la hora de acostarse.</span></div>
+      <div class="sleep-row"><span class="sleep-time">Por qué luz + caminata apenas te levantás</span><span class="sleep-desc">La luz natural en la primera hora después de despertar suprime la melatonina, sube el cortisol de forma saludable y ayuda a dormirte más fácil esa misma noche — por eso la caminata con audiolibro se movió de la tarde a la mañana.</span></div>
+      <div class="sleep-row"><span class="sleep-time">Evitar</span><span class="sleep-desc">Snooze: fragmenta el sueño y te deja peor. Una sola alarma a una hora realista y sostenible los 7 días.</span></div>
     </div>
   </div>
 </div>
@@ -230,7 +226,7 @@
     <div class="stat-row"><span>LLA daily</span><span class="val">Lun–Vie 9:30</span></div>
     <div class="stat-row"><span>LLA planning (sem. A)</span><span class="val">Lunes 9:30</span></div>
     <div class="stat-row"><span>LLA proyecto pptx</span><span class="val">Miércoles 10:30</span></div>
-    <div class="stat-row"><span>FCD reunión</span><span class="val">Martes 8:00 (único madrugón)</span></div>
+    <div class="stat-row"><span>FCD reunión</span><span class="val">Martes 8:00 (ya no es madrugón: despertás a la misma hora que siempre)</span></div>
     <div class="stat-row"><span>Diil reunión</span><span class="val">Miércoles 17:00</span></div>
     <div class="stat-row"><span>LLA horario</span><span class="val">9:30–17:00</span></div>
     <div class="stat-row"><span>FCD proyecto 6 semanas</span><span class="val">11 días totales, ~2/semana, flexible</span></div>
@@ -246,10 +242,12 @@
   <div class="summary-card">
     <h3>🏋️ Hábitos semanales</h3>
     <div class="stat-row"><span>Gym</span><span class="val">Lun, Mié, Vie (mínimo — sábado si querés sumar)</span></div>
-    <div class="stat-row"><span>Pasos diarios</span><span class="val">6.000 pasos</span></div>
-    <div class="stat-row"><span>Audiolibro</span><span class="val">Durante caminatas de ida al gym / pasos</span></div>
-    <div class="stat-row"><span>Wind down</span><span class="val">21:30 (21:00 domingo y lunes)</span></div>
-    <div class="stat-row"><span>Dormir</span><span class="val">22:30 (21:45 domingo y lunes, por el martes)</span></div>
+    <div class="stat-row"><span>Pasos diarios</span><span class="val">6.000 pasos, caminata matutina 6:35–7:15</span></div>
+    <div class="stat-row"><span>Audiolibro</span><span class="val">Durante la caminata matutina, todos los días</span></div>
+    <div class="stat-row"><span>Despertar</span><span class="val">6:30 todos los días, incluidos findes</span></div>
+    <div class="stat-row"><span>Agua → café</span><span class="val">Agua al despertar; café ~90 min después, tras el desayuno</span></div>
+    <div class="stat-row"><span>Wind down</span><span class="val">21:30 todos los días</span></div>
+    <div class="stat-row"><span>Dormir</span><span class="val">22:30 todos los días → 8h exactas</span></div>
   </div>
   <div class="summary-card">
     <h3>🎨 Referencias de color</h3>
@@ -267,8 +265,8 @@
     </div>
   </div>
   <div class="note-box">
-    <strong>💡 Qué cambió respecto al horario anterior</strong>
-    1) El gym sigue lun/mié/vie de 5:15–6:30pm, pero ahora la vuelta a casa es siempre en carro, nunca caminando — la ida sí podés hacerla caminando porque todavía es de día. 2) El martes es tu único día con hora fija de despertar (7:00, por la reunión de FCD a las 8am); el resto de la semana no tenés que madrugar, solo estar lista para las 9:30. 3) Domingo y lunes en la noche adelantamos wind down y hora de dormir ~45 min para que ese madrugón del martes no te dé duro.
+    <strong>💡 Qué cambió respecto a la versión anterior</strong>
+    1) El gym sigue lun/mié/vie de 5:15–6:30pm; la vuelta a casa es siempre en carro, la ida podés hacerla caminando porque todavía es de día. 2) <strong>Despertar fijo a las 6:30 todos los días</strong> (antes eran 10 horas de sueño casi toda la semana, con 8:30 de alarma, y un cambio brusco los martes a las 7:00). Con 22:30 de hora de dormir, 6:30 te da 8 horas exactas y consistentes — la consistencia del horario de sueño importa tanto o más que la duración para la salud metabólica y cardiovascular, así que el martes deja de ser un madrugón especial. 3) La caminata de pasos + audiolibro se movió de la tarde a justo después de despertarte, para aprovechar la luz natural de la mañana (ayuda a regular el reloj circadiano y a dormirte más fácil esa noche). 4) Se agregó explícitamente el vaso de agua al despertar y el café ~90 minutos después, tras el desayuno — ya no queda implícito.
   </div>
 </div>
 
@@ -277,10 +275,15 @@ const weeksData = {
   a: [
     {
       name: 'Lunes', type: '🏋️ Gym · Semana A',
-      tip: 'Día de planning: la reunión de 9:30 reemplaza al daily. Gym después de las 5pm — volvé siempre en carro, y hoy en la noche adelantá el wind down porque mañana madrugás para FCD.',
+      tip: 'Día de planning: la reunión de 9:30 reemplaza al daily. Gym después de las 5pm — volvé siempre en carro.',
       blocks: [
-        { id: 'a-lun-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
-        { id: 'a-lun-2', cat: 'Mañana', label: 'Desayuno (plan nutri)', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'a-lun-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-lun-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-lun-0c', cat: 'Mañana', label: 'Caminata matutina: pasos + audiolibro', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'a-lun-1', cat: 'Mañana', label: 'Ducha + alistarse', hora: '7:15–7:45', cls: 'b-hab' },
+        { id: 'a-lun-2', cat: 'Mañana', label: 'Desayuno (plan nutri)', hora: '7:45–8:05', cls: 'b-hab' },
+        { id: 'a-lun-2b', cat: 'Mañana', label: 'Café (~90 min después de despertar)', hora: '8:05–8:15', cls: 'b-hab' },
+        { id: 'a-lun-2c', cat: 'Mañana', label: 'Tiempo libre / lectura', hora: '8:15–9:25', cls: 'b-free' },
         { id: 'a-lun-3', cat: 'Trabajo', label: 'Planning sprint LLA', hora: '9:30–10:30', cls: 'b-lla' },
         { id: 'a-lun-4', cat: 'Trabajo', label: 'LLA work', hora: '10:30–13:00', cls: 'b-lla' },
         { id: 'a-lun-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
@@ -290,25 +293,29 @@ const weeksData = {
         { id: 'a-lun-9', cat: 'Tarde', label: '🚗 Volver a casa en carro (no caminar, ya es de noche)', hora: '18:30–18:40', cls: 'b-transp' },
         { id: 'a-lun-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:00–19:45', cls: 'b-hab' },
         { id: 'a-lun-11', cat: 'Noche', label: 'DocDoc calls', hora: '19:45–20:30', cls: 'b-doc' },
-        { id: 'a-lun-12', cat: 'Noche', label: 'Wind down adelantado (mañana madrugás)', hora: '21:00–21:45', cls: 'b-wind' },
-        { id: 'a-lun-13', cat: 'Noche', label: 'Sueño', hora: '21:45', cls: 'b-sleep' },
+        { id: 'a-lun-12', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'a-lun-13', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
       ]
     },
     {
-      name: 'Martes', type: '💼 FCD + Diil · madrugón',
-      tip: 'Único día con alarma fija: 7:00am para la reunión de FCD a las 8. El resto de la semana no tenés que madrugar.',
+      name: 'Martes', type: '💼 FCD + Diil',
+      tip: 'Misma hora de despertar de siempre (6:30) — la reunión FCD de las 8am ya no requiere madrugar más que otros días.',
       blocks: [
-        { id: 'a-mar-0', cat: 'Madrugada', label: 'Despertar + alistarse (alarma fija)', hora: '7:00–7:45', cls: 'b-hab' },
+        { id: 'a-mar-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-mar-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-mar-0c', cat: 'Mañana', label: 'Caminata matutina: pasos + audiolibro', hora: '6:35–7:10', cls: 'b-hab' },
+        { id: 'a-mar-0d', cat: 'Mañana', label: 'Ducha + alistarse', hora: '7:10–7:45', cls: 'b-hab' },
+        { id: 'a-mar-0e', cat: 'Mañana', label: 'Café rápido', hora: '7:45–8:00', cls: 'b-hab' },
         { id: 'a-mar-1', cat: 'Mañana temprana', label: 'FCD reunión semanal', hora: '8:00–8:30', cls: 'b-fcd' },
-        { id: 'a-mar-3', cat: 'Mañana', label: 'Desayuno', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'a-mar-3', cat: 'Mañana', label: 'Desayuno', hora: '8:30–9:00', cls: 'b-hab' },
+        { id: 'a-mar-3b', cat: 'Mañana', label: 'Tiempo libre / prep', hora: '9:00–9:25', cls: 'b-free' },
         { id: 'a-mar-4', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
         { id: 'a-mar-5', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
         { id: 'a-mar-6', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
         { id: 'a-mar-7', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
         { id: 'a-mar-8', cat: 'Tarde', label: 'Diil horas', hora: '17:00–18:30', cls: 'b-diil' },
-        { id: 'a-mar-9', cat: 'Tarde', label: 'Pasos + audiolibro (de día, en casa/zona conocida)', hora: '18:30–19:15', cls: 'b-hab' },
-        { id: 'a-mar-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:30–20:30', cls: 'b-hab' },
-        { id: 'a-mar-11', cat: 'Noche', label: 'Lectura', hora: '21:00–21:30', cls: 'b-free' },
+        { id: 'a-mar-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:00–20:00', cls: 'b-hab' },
+        { id: 'a-mar-11', cat: 'Noche', label: 'Lectura', hora: '20:30–21:30', cls: 'b-free' },
         { id: 'a-mar-12', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
         { id: 'a-mar-13', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
       ]
@@ -317,8 +324,13 @@ const weeksData = {
       name: 'Miércoles', type: '🏋️ Gym · Diil · pptx',
       tip: 'Día cargado: reunión LLA 10:30, Diil 17:00, gym después. Volvé del gym en carro — ya es de noche.',
       blocks: [
-        { id: 'a-mie-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
-        { id: 'a-mie-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'a-mie-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-mie-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-mie-0c', cat: 'Mañana', label: 'Caminata matutina: pasos + audiolibro', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'a-mie-1', cat: 'Mañana', label: 'Ducha + alistarse', hora: '7:15–7:45', cls: 'b-hab' },
+        { id: 'a-mie-2', cat: 'Mañana', label: 'Desayuno', hora: '7:45–8:05', cls: 'b-hab' },
+        { id: 'a-mie-2b', cat: 'Mañana', label: 'Café (~90 min después de despertar)', hora: '8:05–8:15', cls: 'b-hab' },
+        { id: 'a-mie-2c', cat: 'Mañana', label: 'Tiempo libre / lectura', hora: '8:15–9:25', cls: 'b-free' },
         { id: 'a-mie-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
         { id: 'a-mie-4', cat: 'Trabajo', label: 'LLA work (prep pptx)', hora: '9:45–10:30', cls: 'b-lla' },
         { id: 'a-mie-5', cat: 'Trabajo', label: 'Reunión proyecto LLA', hora: '10:30–11:30', cls: 'b-lla' },
@@ -336,16 +348,20 @@ const weeksData = {
     },
     {
       name: 'Jueves', type: '💼 FCD work · DocDoc',
-      tip: 'Día tranquilo de LLA. Aprovechá la tarde para FCD project y DocDoc en la noche. Sin gym, sin madrugón.',
+      tip: 'Día tranquilo de LLA. Aprovechá la tarde para FCD project y DocDoc en la noche. Sin gym.',
       blocks: [
-        { id: 'a-jue-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
-        { id: 'a-jue-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'a-jue-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-jue-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-jue-0c', cat: 'Mañana', label: 'Caminata matutina: pasos + audiolibro', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'a-jue-1', cat: 'Mañana', label: 'Ducha + alistarse', hora: '7:15–7:45', cls: 'b-hab' },
+        { id: 'a-jue-2', cat: 'Mañana', label: 'Desayuno', hora: '7:45–8:05', cls: 'b-hab' },
+        { id: 'a-jue-2b', cat: 'Mañana', label: 'Café (~90 min después de despertar)', hora: '8:05–8:15', cls: 'b-hab' },
+        { id: 'a-jue-2c', cat: 'Mañana', label: 'Tiempo libre / lectura', hora: '8:15–9:25', cls: 'b-free' },
         { id: 'a-jue-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
         { id: 'a-jue-4', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
         { id: 'a-jue-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
         { id: 'a-jue-6', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
         { id: 'a-jue-7', cat: 'Tarde', label: 'FCD work (project)', hora: '17:00–18:30', cls: 'b-fcd' },
-        { id: 'a-jue-8', cat: 'Tarde', label: 'Pasos + audiolibro (de día)', hora: '18:30–19:15', cls: 'b-hab' },
         { id: 'a-jue-9', cat: 'Noche', label: 'Cena + ducha', hora: '19:30–20:30', cls: 'b-hab' },
         { id: 'a-jue-10', cat: 'Noche', label: 'DocDoc calls', hora: '20:30–21:30', cls: 'b-doc' },
         { id: 'a-jue-11', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
@@ -356,8 +372,13 @@ const weeksData = {
       name: 'Viernes', type: '🏋️ Gym · cierre de semana',
       tip: 'Último día de LLA. Gym después de las 5 — volvé en carro. Noche libre para recargar.',
       blocks: [
-        { id: 'a-vie-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
-        { id: 'a-vie-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'a-vie-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-vie-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-vie-0c', cat: 'Mañana', label: 'Caminata matutina: pasos + audiolibro', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'a-vie-1', cat: 'Mañana', label: 'Ducha + alistarse', hora: '7:15–7:45', cls: 'b-hab' },
+        { id: 'a-vie-2', cat: 'Mañana', label: 'Desayuno', hora: '7:45–8:05', cls: 'b-hab' },
+        { id: 'a-vie-2b', cat: 'Mañana', label: 'Café (~90 min después de despertar)', hora: '8:05–8:15', cls: 'b-hab' },
+        { id: 'a-vie-2c', cat: 'Mañana', label: 'Tiempo libre / lectura', hora: '8:15–9:25', cls: 'b-free' },
         { id: 'a-vie-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
         { id: 'a-vie-4', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
         { id: 'a-vie-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
@@ -373,11 +394,14 @@ const weeksData = {
     },
     {
       name: 'Sábado', type: '💑 Novio · descanso',
-      tip: 'Semana A: finde con el novio. Si sumás un 4to gym, hacelo antes de las 5pm para poder ir y volver caminando con luz de día; si es más tarde, en carro.',
+      tip: 'Semana A: finde con el novio. Despertar a la misma hora que entre semana evita el "jet lag social" del fin de semana. Si sumás un 4to gym, antes de las 5pm para ir y volver caminando con luz de día; si es más tarde, en carro.',
       blocks: [
-        { id: 'a-sab-1', cat: 'Mañana', label: 'Despertar tranquilo', hora: '8:30–9:00', cls: 'b-hab' },
-        { id: 'a-sab-2', cat: 'Mañana', label: 'Desayuno', hora: '9:00–9:30', cls: 'b-hab' },
-        { id: 'a-sab-3', cat: 'Mañana', label: 'Caminata al gym (pasos + audiolibro, 30 min)', hora: '9:30–10:00', cls: 'b-hab' },
+        { id: 'a-sab-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-sab-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-sab-3', cat: 'Mañana', label: 'Caminata: pasos + audiolibro (30–40 min)', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'a-sab-1', cat: 'Mañana', label: 'Ducha + desayuno', hora: '7:15–8:00', cls: 'b-hab' },
+        { id: 'a-sab-1b', cat: 'Mañana', label: 'Café (~90 min después de despertar)', hora: '8:00–8:15', cls: 'b-hab' },
+        { id: 'a-sab-2', cat: 'Mañana', label: 'Tiempo libre / lectura, mañana tranquila', hora: '8:15–10:00', cls: 'b-free' },
         { id: 'a-sab-3b', cat: 'Mañana', label: 'Gym opcional (4to día, 1h, antes de las 5pm)', hora: '10:00–11:00', cls: 'b-gym' },
         { id: 'a-sab-4', cat: 'Día', label: 'Novio / plan libre', hora: '11:30–', cls: 'b-social' },
         { id: 'a-sab-5', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
@@ -386,24 +410,32 @@ const weeksData = {
     },
     {
       name: 'Domingo', type: '🌿 Comida libre · recarga',
-      tip: '¡Un tiempo libre a la semana mejora la adherencia! En la noche adelantá el wind down — mañana lunes normal, pero el martes madrugás.',
+      tip: '¡Un tiempo libre a la semana mejora la adherencia! Mismo despertar de siempre — así el lunes y el martes arrancan igual de bien.',
       blocks: [
-        { id: 'a-dom-1', cat: 'Mañana', label: 'Despertar tranquilo', hora: '8:30–9:00', cls: 'b-hab' },
-        { id: 'a-dom-2', cat: 'Mañana', label: 'Desayuno', hora: '9:00–9:30', cls: 'b-hab' },
+        { id: 'a-dom-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-dom-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'a-dom-1b', cat: 'Mañana', label: 'Caminata: pasos + audiolibro (30–40 min)', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'a-dom-1', cat: 'Mañana', label: 'Ducha + desayuno', hora: '7:15–8:00', cls: 'b-hab' },
+        { id: 'a-dom-2', cat: 'Mañana', label: 'Tiempo libre / lectura, mañana tranquila', hora: '8:00–10:00', cls: 'b-free' },
         { id: 'a-dom-3', cat: 'Día', label: 'Novio / plan libre', hora: '10:00–', cls: 'b-social' },
         { id: 'a-dom-4', cat: 'Mediodía', label: 'Comida libre (plan nutri)', hora: 'almuerzo', cls: 'b-hab' },
-        { id: 'a-dom-5', cat: 'Noche', label: 'Wind down adelantado', hora: '21:00–21:45', cls: 'b-wind' },
-        { id: 'a-dom-6', cat: 'Noche', label: 'Sueño', hora: '21:45', cls: 'b-sleep' },
+        { id: 'a-dom-5', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'a-dom-6', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
       ]
     },
   ],
   b: [
     {
       name: 'Lunes', type: '🏋️ Gym · Semana B',
-      tip: 'Sin planning esta semana. Daily normal a las 9:30. Gym después de las 5 — volvé en carro, y adelantá el wind down por el martes.',
+      tip: 'Sin planning esta semana. Daily normal a las 9:30. Gym después de las 5 — volvé en carro.',
       blocks: [
-        { id: 'b-lun-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
-        { id: 'b-lun-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'b-lun-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-lun-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-lun-0c', cat: 'Mañana', label: 'Caminata matutina: pasos + audiolibro', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'b-lun-1', cat: 'Mañana', label: 'Ducha + alistarse', hora: '7:15–7:45', cls: 'b-hab' },
+        { id: 'b-lun-2', cat: 'Mañana', label: 'Desayuno', hora: '7:45–8:05', cls: 'b-hab' },
+        { id: 'b-lun-2b', cat: 'Mañana', label: 'Café (~90 min después de despertar)', hora: '8:05–8:15', cls: 'b-hab' },
+        { id: 'b-lun-2c', cat: 'Mañana', label: 'Tiempo libre / lectura', hora: '8:15–9:25', cls: 'b-free' },
         { id: 'b-lun-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
         { id: 'b-lun-4', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
         { id: 'b-lun-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
@@ -413,25 +445,29 @@ const weeksData = {
         { id: 'b-lun-9', cat: 'Tarde', label: '🚗 Volver a casa en carro (no caminar, ya es de noche)', hora: '18:30–18:40', cls: 'b-transp' },
         { id: 'b-lun-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:00–19:45', cls: 'b-hab' },
         { id: 'b-lun-11', cat: 'Noche', label: 'DocDoc calls', hora: '19:45–20:30', cls: 'b-doc' },
-        { id: 'b-lun-12', cat: 'Noche', label: 'Wind down adelantado (mañana madrugás)', hora: '21:00–21:45', cls: 'b-wind' },
-        { id: 'b-lun-13', cat: 'Noche', label: 'Sueño', hora: '21:45', cls: 'b-sleep' },
+        { id: 'b-lun-12', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'b-lun-13', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
       ]
     },
     {
-      name: 'Martes', type: '💼 FCD + Diil · madrugón',
-      tip: 'Único día con alarma fija: 7:00am para la reunión de FCD a las 8. El resto de la semana no tenés que madrugar.',
+      name: 'Martes', type: '💼 FCD + Diil',
+      tip: 'Igual que semana A: misma hora de despertar (6:30), FCD a las 8am ya no es un madrugón, Diil horas en la tarde.',
       blocks: [
-        { id: 'b-mar-0', cat: 'Madrugada', label: 'Despertar + alistarse (alarma fija)', hora: '7:00–7:45', cls: 'b-hab' },
+        { id: 'b-mar-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-mar-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-mar-0c', cat: 'Mañana', label: 'Caminata matutina: pasos + audiolibro', hora: '6:35–7:10', cls: 'b-hab' },
+        { id: 'b-mar-0d', cat: 'Mañana', label: 'Ducha + alistarse', hora: '7:10–7:45', cls: 'b-hab' },
+        { id: 'b-mar-0e', cat: 'Mañana', label: 'Café rápido', hora: '7:45–8:00', cls: 'b-hab' },
         { id: 'b-mar-1', cat: 'Mañana temprana', label: 'FCD reunión semanal', hora: '8:00–8:30', cls: 'b-fcd' },
-        { id: 'b-mar-3', cat: 'Mañana', label: 'Desayuno', hora: '8:30–9:15', cls: 'b-hab' },
+        { id: 'b-mar-3', cat: 'Mañana', label: 'Desayuno', hora: '8:30–9:00', cls: 'b-hab' },
+        { id: 'b-mar-3b', cat: 'Mañana', label: 'Tiempo libre / prep', hora: '9:00–9:25', cls: 'b-free' },
         { id: 'b-mar-4', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
         { id: 'b-mar-5', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
         { id: 'b-mar-6', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
         { id: 'b-mar-7', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
         { id: 'b-mar-8', cat: 'Tarde', label: 'Diil horas', hora: '17:00–18:30', cls: 'b-diil' },
-        { id: 'b-mar-9', cat: 'Tarde', label: 'Pasos + audiolibro (de día)', hora: '18:30–19:15', cls: 'b-hab' },
-        { id: 'b-mar-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:30–20:30', cls: 'b-hab' },
-        { id: 'b-mar-11', cat: 'Noche', label: 'Lectura', hora: '21:00–21:30', cls: 'b-free' },
+        { id: 'b-mar-10', cat: 'Noche', label: 'Cena + ducha', hora: '19:00–20:00', cls: 'b-hab' },
+        { id: 'b-mar-11', cat: 'Noche', label: 'Lectura', hora: '20:30–21:30', cls: 'b-free' },
         { id: 'b-mar-12', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
         { id: 'b-mar-13', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
       ]
@@ -440,8 +476,13 @@ const weeksData = {
       name: 'Miércoles', type: '🏋️ Gym · Diil · pptx',
       tip: 'El miércoles siempre es el día más cargado. Volvé del gym en carro — ya es de noche.',
       blocks: [
-        { id: 'b-mie-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
-        { id: 'b-mie-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'b-mie-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-mie-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-mie-0c', cat: 'Mañana', label: 'Caminata matutina: pasos + audiolibro', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'b-mie-1', cat: 'Mañana', label: 'Ducha + alistarse', hora: '7:15–7:45', cls: 'b-hab' },
+        { id: 'b-mie-2', cat: 'Mañana', label: 'Desayuno', hora: '7:45–8:05', cls: 'b-hab' },
+        { id: 'b-mie-2b', cat: 'Mañana', label: 'Café (~90 min después de despertar)', hora: '8:05–8:15', cls: 'b-hab' },
+        { id: 'b-mie-2c', cat: 'Mañana', label: 'Tiempo libre / lectura', hora: '8:15–9:25', cls: 'b-free' },
         { id: 'b-mie-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
         { id: 'b-mie-4', cat: 'Trabajo', label: 'LLA work (prep pptx)', hora: '9:45–10:30', cls: 'b-lla' },
         { id: 'b-mie-5', cat: 'Trabajo', label: 'Reunión proyecto LLA', hora: '10:30–11:30', cls: 'b-lla' },
@@ -459,16 +500,20 @@ const weeksData = {
     },
     {
       name: 'Jueves', type: '💼 FCD work · DocDoc',
-      tip: 'FCD project y DocDoc calls. Pasos en la tarde como desconexión. Sin gym, sin madrugón.',
+      tip: 'FCD project y DocDoc calls. Sin gym.',
       blocks: [
-        { id: 'b-jue-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
-        { id: 'b-jue-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'b-jue-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-jue-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-jue-0c', cat: 'Mañana', label: 'Caminata matutina: pasos + audiolibro', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'b-jue-1', cat: 'Mañana', label: 'Ducha + alistarse', hora: '7:15–7:45', cls: 'b-hab' },
+        { id: 'b-jue-2', cat: 'Mañana', label: 'Desayuno', hora: '7:45–8:05', cls: 'b-hab' },
+        { id: 'b-jue-2b', cat: 'Mañana', label: 'Café (~90 min después de despertar)', hora: '8:05–8:15', cls: 'b-hab' },
+        { id: 'b-jue-2c', cat: 'Mañana', label: 'Tiempo libre / lectura', hora: '8:15–9:25', cls: 'b-free' },
         { id: 'b-jue-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
         { id: 'b-jue-4', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
         { id: 'b-jue-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
         { id: 'b-jue-6', cat: 'Trabajo', label: 'LLA work', hora: '13:45–17:00', cls: 'b-lla' },
         { id: 'b-jue-7', cat: 'Tarde', label: 'FCD work (project)', hora: '17:00–18:30', cls: 'b-fcd' },
-        { id: 'b-jue-8', cat: 'Tarde', label: 'Pasos + audiolibro (de día)', hora: '18:30–19:15', cls: 'b-hab' },
         { id: 'b-jue-9', cat: 'Noche', label: 'Cena + ducha', hora: '19:30–20:30', cls: 'b-hab' },
         { id: 'b-jue-10', cat: 'Noche', label: 'DocDoc calls', hora: '20:30–21:30', cls: 'b-doc' },
         { id: 'b-jue-11', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
@@ -479,8 +524,13 @@ const weeksData = {
       name: 'Viernes', type: '🏋️ Gym · cierre de semana',
       tip: 'Cierre de semana. Gym después de las 5 — volvé en carro. Noche libre antes del finde.',
       blocks: [
-        { id: 'b-vie-1', cat: 'Mañana', label: 'Despertar + alistarse', hora: '8:30–9:15', cls: 'b-hab' },
-        { id: 'b-vie-2', cat: 'Mañana', label: 'Desayuno', hora: '9:15–9:30', cls: 'b-hab' },
+        { id: 'b-vie-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-vie-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-vie-0c', cat: 'Mañana', label: 'Caminata matutina: pasos + audiolibro', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'b-vie-1', cat: 'Mañana', label: 'Ducha + alistarse', hora: '7:15–7:45', cls: 'b-hab' },
+        { id: 'b-vie-2', cat: 'Mañana', label: 'Desayuno', hora: '7:45–8:05', cls: 'b-hab' },
+        { id: 'b-vie-2b', cat: 'Mañana', label: 'Café (~90 min después de despertar)', hora: '8:05–8:15', cls: 'b-hab' },
+        { id: 'b-vie-2c', cat: 'Mañana', label: 'Tiempo libre / lectura', hora: '8:15–9:25', cls: 'b-free' },
         { id: 'b-vie-3', cat: 'Trabajo', label: 'Daily LLA', hora: '9:30–9:45', cls: 'b-lla' },
         { id: 'b-vie-4', cat: 'Trabajo', label: 'LLA work', hora: '9:45–13:00', cls: 'b-lla' },
         { id: 'b-vie-5', cat: 'Mediodía', label: 'Almuerzo', hora: '13:00–13:45', cls: 'b-hab' },
@@ -496,11 +546,14 @@ const weeksData = {
     },
     {
       name: 'Sábado', type: '👯 Amigos · descanso',
-      tip: 'Semana B: sábado con amigos cada dos semanas. Si sumás un 4to gym, antes de las 5pm para ir y volver caminando con luz de día.',
+      tip: 'Semana B: sábado con amigos cada dos semanas. Mismo despertar (6:30) para evitar el "jet lag social" del finde. Si sumás un 4to gym, antes de las 5pm para ir y volver caminando con luz de día.',
       blocks: [
-        { id: 'b-sab-1', cat: 'Mañana', label: 'Despertar tranquilo', hora: '8:30–9:00', cls: 'b-hab' },
-        { id: 'b-sab-2', cat: 'Mañana', label: 'Desayuno', hora: '9:00–9:30', cls: 'b-hab' },
-        { id: 'b-sab-3', cat: 'Mañana', label: 'Caminata al gym (pasos + audiolibro, 30 min)', hora: '9:30–10:00', cls: 'b-hab' },
+        { id: 'b-sab-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-sab-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-sab-3', cat: 'Mañana', label: 'Caminata: pasos + audiolibro (30–40 min)', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'b-sab-1', cat: 'Mañana', label: 'Ducha + desayuno', hora: '7:15–8:00', cls: 'b-hab' },
+        { id: 'b-sab-1b', cat: 'Mañana', label: 'Café (~90 min después de despertar)', hora: '8:00–8:15', cls: 'b-hab' },
+        { id: 'b-sab-2', cat: 'Mañana', label: 'Tiempo libre / lectura, mañana tranquila', hora: '8:15–10:00', cls: 'b-free' },
         { id: 'b-sab-3b', cat: 'Mañana', label: 'Gym opcional (4to día, 1h, antes de las 5pm)', hora: '10:00–11:00', cls: 'b-gym' },
         { id: 'b-sab-4', cat: 'Día', label: 'Amigos / plan libre', hora: '11:30–', cls: 'b-social' },
         { id: 'b-sab-5', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
@@ -509,14 +562,17 @@ const weeksData = {
     },
     {
       name: 'Domingo', type: '🌿 Comida libre · novio',
-      tip: '¡Un tiempo libre a la semana mejora la adherencia! En la noche adelantá el wind down por el martes.',
+      tip: '¡Un tiempo libre a la semana mejora la adherencia! Mismo despertar de siempre — el lunes y martes arrancan igual de bien.',
       blocks: [
-        { id: 'b-dom-1', cat: 'Mañana', label: 'Despertar tranquilo', hora: '8:30–9:00', cls: 'b-hab' },
-        { id: 'b-dom-2', cat: 'Mañana', label: 'Desayuno', hora: '9:00–9:30', cls: 'b-hab' },
+        { id: 'b-dom-0', cat: 'Mañana', label: 'Despertar + vaso de agua', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-dom-0b', cat: 'Mañana', label: 'Persianas / luz natural', hora: '6:30', cls: 'b-hab' },
+        { id: 'b-dom-1b', cat: 'Mañana', label: 'Caminata: pasos + audiolibro (30–40 min)', hora: '6:35–7:15', cls: 'b-hab' },
+        { id: 'b-dom-1', cat: 'Mañana', label: 'Ducha + desayuno', hora: '7:15–8:00', cls: 'b-hab' },
+        { id: 'b-dom-2', cat: 'Mañana', label: 'Tiempo libre / lectura, mañana tranquila', hora: '8:00–10:00', cls: 'b-free' },
         { id: 'b-dom-3', cat: 'Día', label: 'Novio / plan libre', hora: '10:00–', cls: 'b-social' },
         { id: 'b-dom-4', cat: 'Mediodía', label: 'Comida libre (plan nutri)', hora: 'almuerzo', cls: 'b-hab' },
-        { id: 'b-dom-5', cat: 'Noche', label: 'Wind down adelantado', hora: '21:00–21:45', cls: 'b-wind' },
-        { id: 'b-dom-6', cat: 'Noche', label: 'Sueño', hora: '21:45', cls: 'b-sleep' },
+        { id: 'b-dom-5', cat: 'Noche', label: 'Wind down', hora: '21:30–22:30', cls: 'b-wind' },
+        { id: 'b-dom-6', cat: 'Noche', label: 'Sueño', hora: '22:30', cls: 'b-sleep' },
       ]
     },
   ]
